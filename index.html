@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Daily News Briefing</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&display=swap');
+    body{margin:0;font-family:Merriweather [oai_citation:0‡reuters.com](https://www.reuters.com/sustainability/boards-policy-regulation/india-regulator-asks-air-india-training-data-pilots-dispatcher-crashed-plane-2025-06-17/?utm_source=chatgpt.com) [oai_citation:1‡hindustantimes.com](https://www.hindustantimes.com/india-news/india-regulator-asks-air-india-for-training-data-of-pilots-dispatcher-of-crashed-plane-101750153164817.html?utm_source=chatgpt.com)r:#111;line-height:1.5}
+    header{background:#891400;color:#fff;padding:1.2rem 1rem}
+    header h1{margin:0;font-size:2rem;letter-spacing:.5px}
+    main{max-width:920px;margin:2rem auto;padding:0 1rem}
+    section{margin-bottom:2.5rem;border-bottom:1px solid #ddd}
+    section:last-child{border:none}
+    h2{font-size:1.4rem;margin:0 0 1rem;color:#891400}
+    article{margin-bottom:1.4rem}
+    article h3{margin:0;font-size:1.1rem;font-weight:700;cursor:pointer}
+    article  [oai_citation:2‡timesofindia.indiatimes.com](https://timesofindia.indiatimes.com/india/on-madras-high-court-order-tamil-nadu-cops-arrest-adgp-rank-officer-in-kidnapping-case/articleshow/121894045.cms?utm_source=chatgpt.com) [oai_citation:3‡hindustantimes.com](https://www.hindustantimes.com/india-news/in-tamil-nadu-top-cops-arrest-over-kidnapping-case-a-love-marriage-connection-101750089053957.html?utm_source=chatgpt.com)e ul{margin:.4rem 0 .8rem 1.2rem;padding:0}
+    footer{font-size:.8rem;text-align:center;color:#666;margin:3rem 0 1rem}
+    details{border-left:4px solid #891400;padding-left:.6rem;margin-top:.3rem}
+    details[open] summary::after{content:\"▲\"}
+    summary{list-style:none;position:relative}
+    summary::after{content:\"▼\";font-size:.7rem;position:absolute;right:-1.3rem;top:.1rem}
+    @media (prefers-color-scheme:dark){
+      body{background:#111;color:#eee}
+     [oai_citation:4‡reuters.com](https://www.reuters.com/world/china/seeking-unity-g7-meets-amid-escalating-ukraine-middle-east-conflicts-2025-06-16/?utm_source=chatgpt.com) [oai_citation:5‡timesofindia.indiatimes.com](https://timesofindia.indiatimes.com/india/g7-summit-2025-live-updates-date-guests-canada-mark-carney-pm-narendra-modi-donald-trump-kananaskis/liveblog/121893210.cms)1c}
+      section{border-color:#444}
+    }
+  </style>
+</head>
+<body>
+<header><h1>Daily News Briefing</h1></header>
+
+<main id=\"news\"></main>
+
+<footer>© 2025 News Digest · Sources as cited</footer>
+
+<script>
+// --- CONFIG ---
+const markdownUrl = \"/news/Daily%20News%202025-06-17.md\"; // your generated markdown path
+// --------------
+
+// convert very small subset of markdown we use → HTML
+functio [oai_citation:6‡reuters.com](https://www.reuters.com/world/india/rupee-hits-over-two-month-low-hurt-by-geopolitical-worries-trump-tariff-remark-2025-06-17/?utm_source=chatgpt.com) [oai_citation:7‡economictimes.indiatimes.com](https://economictimes.indiatimes.com/markets/stocks/live-blog/bse-sensex-today-live-nifty-stock-market-updates-17-june-2025/liveblog/121896982.cms)  .replace(/^### (.*$)/gm, '<header><h1>$1</h1></header>')      // dateline – will be hidden
+    .replace(/^## (.*$)/gm, '<section><h2>$1</h2></section>')
+    .replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>')          // bold
+    .replace(/^\\*No reliable.+$/gm,'<p><em>$&</em></p>')          // placeholder
+    .replace(/\\n\\n/g, '</article><article>')                     // paragraph breaks
+    .replace(/• /g, '<li>')
+    .replace(/\\n\\*\\*/g, '<h3>')                 [oai_citation:8‡techcrunch.com](https://techcrunch.com/2025/06/17/google-to-scale-up-ai-powered-fraud-detection-and-security-operations-in-india/?utm_source=chatgpt.com) [oai_citation:9‡timesofindia.indiatimes.com](https://timesofindia.indiatimes.com/technology/tech-news/how-google-plans-to-save-indians-20000-crore-from-cybercrime-in-2025/articleshow/121908679.cms?utm_source=chatgpt.com)art
+    .replace(/\\n\\(Sources:[\\s\\S]*?\\)/g, m=>`<p>${m}</p>`)    // keep sources
+}
+
+// inject converted HTML & toggle
+fetch(markdownUrl).then(r=>r.text()).then(mdTxt=>{
+  const html = md(mdTxt)
+  document.getElementById('news').innerHTML = html
+  // wrap each story in <details>
+  document.querySelectorAll('section').forEach(sec=>{
+    const articles = Array.from(sec.childNodes).filter(n=>n.nodeN [oai_citation:10‡espn.com](https://www.espn.com/espn/story/_/id/45524535/neeraj-chopra-paris-diamond-league-javelin-start-list-rugby-premier-league-rpl-indian-sports-live-june-17) [oai_citation:11‡olympics.com](https://www.olympics.com/es/noticias/diamond-league-2025-paris-programa-como-ver-liga-de-diamante-atletismo?utm_source=chatgpt.com)ach(a=>{
+      const d=document.createElement('details')
+      const s=document.createElement('summary')
+      s.innerHTML = a.querySelector('strong')?.outerHTML || \"Story\"
+      d.appendChild(s); d.appendChild(a)
+      sec.appendChild(d)
+    })
+  })
+})
+</script>
+</body>
+</html>
