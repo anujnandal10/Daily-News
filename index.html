@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Daily News • Dual-Theme</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- Fonts & libs -->
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -17,16 +15,16 @@
 /* ---------- THEME TOKENS ---------- */
 :root{
   --accent:#4d9bff;
-  --bg:#fafafa;          --txt:#111;   /* light default */
+  --bg:#fafafa;           --txt:#111;
   --glass:rgba(255,255,255,.75);
   --card:rgba(255,255,255,.55); --card-brd:rgba(0,0,0,.12);
-  --heading:#000;        --halo:0 0 8px rgba(77,155,255,.35);
+  --heading:#000;         --halo:0 0 8px rgba(77,155,255,.35);
 }
 [data-theme="dark"]{
-  --bg:#000;             --txt:#f4f4f4;
+  --bg:#000;              --txt:#f4f4f4;
   --glass:rgba(16,16,16,.6);
-  --card:rgba(20,20,20,.9);  --card-brd:rgba(255,255,255,.12);
-  --heading:#fff;        --halo:0 0 10px rgba(77,155,255,.45);
+  --card:rgba(20,20,20,.9);--card-brd:rgba(255,255,255,.12);
+  --heading:#fff;         --halo:0 0 10px rgba(77,155,255,.45);
 }
 
 /* ---------- RESET ---------- */
@@ -41,8 +39,8 @@ body{
 /* ---------- NAVBAR ---------- */
 nav{
   position:sticky;top:0;z-index:100;
-  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-  background:var(--glass); border-bottom:1px solid var(--card-brd);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:var(--glass);border-bottom:1px solid var(--card-brd);
   transition:background .35s;
 }
 nav .wrap{
@@ -50,28 +48,28 @@ nav .wrap{
   display:flex;align-items:center;justify-content:space-between;
 }
 .brand{
-  font-size:clamp(1.7rem,4vw,2.4rem);font-weight:700;letter-spacing:.02em;
-  color:var(--heading); -webkit-text-stroke:.5px var(--accent);
-  text-shadow:var(--halo); transition:color .35s,text-shadow .35s;
+  font-size:clamp(1.65rem,4vw,2.4rem);font-weight:700;letter-spacing:.02em;
+  color:var(--heading);-webkit-text-stroke:.5px var(--accent);
+  text-shadow:var(--halo);transition:color .35s,text-shadow .35s;
 }
 
 /* ---------- THEME TOGGLE ---------- */
+.theme-toggle{display:flex;align-items:center;gap:.55rem;min-width:150px}
+.theme-label{font-size:.95rem;font-weight:600;white-space:nowrap}
+
 .switch{
-  display:flex;align-items:center;gap:.6rem;cursor:pointer;user-select:none;
-  font-size:.95rem;font-weight:600;
+  position:relative;width:52px;height:26px;flex-shrink:0;
 }
-.switch input{display:none}
+.switch input{opacity:0;width:0;height:0}
 .slider{
-  width:48px;height:24px;border-radius:999px;position:relative;
-  background:var(--accent);transition:.4s;
+  position:absolute;inset:0;border-radius:999px;background:var(--accent);
+  transition:background .4s;
 }
 .slider::before{
-  content:"";position:absolute;left:4px;top:4px;width:16px;height:16px;
+  content:"";position:absolute;left:4px;top:4px;width:18px;height:18px;
   border-radius:50%;background:#fff;transition:.4s;
 }
-input:checked + .slider::before{transform:translateX(24px)}
-.mode-text{transition:opacity .3s}
-[data-theme="dark"] .mode-light{opacity:0}[data-theme="light"] .mode-dark{opacity:0}
+.switch input:checked + .slider::before{transform:translateX(24px)}
 
 /* ---------- GRID ---------- */
 main{max-width:1200px;margin:3rem auto 6rem;padding:0 1.4rem}
@@ -82,8 +80,9 @@ main{max-width:1200px;margin:3rem auto 6rem;padding:0 1.4rem}
 section{
   break-inside:avoid;margin:0 0 2rem;padding:1.8rem 1.6rem 1.2rem;
   background:var(--card);border:1px solid var(--card-brd);border-radius:22px;
-  backdrop-filter:blur(24px); transition:background .35s,border-color .35s;
+  backdrop-filter:blur(24px);
   transform:translateY(60px) scale(.95);opacity:0;
+  transition:background .35s,border-color .35s;
 }
 h2{
   font-size:1.3rem;margin-bottom:1.2rem;font-weight:700;
@@ -91,17 +90,23 @@ h2{
   transition:color .35s,text-shadow .35s;
 }
 details{margin:1rem 0;border-left:3px solid var(--accent);padding-left:1rem}
-summary{cursor:pointer;list-style:none;font-weight:700;font-size:1.05rem;
-        line-height:1.45;color:var(--txt);position:relative;padding-right:1.6rem}
-summary::after{content:"›";position:absolute;right:0;top:0;font-size:1.25rem;
-                transition:.25s}
+summary{
+  cursor:pointer;list-style:none;font-weight:700;font-size:1.05rem;
+  line-height:1.45;color:var(--txt);position:relative;padding-right:1.6rem;
+}
+summary::after{
+  content:"›";position:absolute;right:0;top:0;font-size:1.25rem;
+  transition:.25s;filter:brightness(2)
+}
 details[open] summary::after{transform:rotate(90deg)}
 ul{padding-left:1.2rem;margin:.5rem 0}
 
-/* ---------- FOOTER ---------- */
+/* ---------- FOOT ---------- */
 footer{text-align:center;font-size:.8rem;margin:4rem 0;color:var(--txt);opacity:.65}
-@media(min-width:800px){::-webkit-scrollbar{width:10px}
-::-webkit-scrollbar-thumb{background:var(--accent);border-radius:6px}}
+@media(min-width:800px){
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:6px}
+}
 </style>
 </head>
 <body>
@@ -110,12 +115,13 @@ footer{text-align:center;font-size:.8rem;margin:4rem 0;color:var(--txt);opacity:
   <div class="wrap">
     <div class="brand">Daily&nbsp;News&nbsp;Briefing</div>
 
-    <label class="switch" title="Toggle Light / Dark">
-      <span class="mode-text mode-light">Light Mode</span>
-      <input id="themeToggle" type="checkbox">
-      <span class="slider"></span>
-      <span class="mode-text mode-dark">Dark Mode</span>
-    </label>
+    <div class="theme-toggle">
+      <span id="themeLabel" class="theme-label">Dark&nbsp;Mode</span>
+      <label class="switch">
+        <input id="themeToggle" type="checkbox">
+        <span class="slider"></span>
+      </label>
+    </div>
   </div>
 </nav>
 
@@ -124,30 +130,37 @@ footer{text-align:center;font-size:.8rem;margin:4rem 0;color:var(--txt);opacity:
 <footer>© 2025 News Digest — Sources as cited</footer>
 
 <script>
-/* ---- CHANGE THIS LINE DAILY ---- */
+/* ------------ EDIT THIS DAILY ------------ */
 const markdownUrl = "news/Daily%20News%202025-06-17.md";
-/* -------------------------------- */
+/* ----------------------------------------- */
 
 const root   = document.documentElement;
 const toggle = document.getElementById('themeToggle');
+const label  = document.getElementById('themeLabel');
 
 /* initial theme */
 const saved  = localStorage.getItem('theme') || 'light';
-root.dataset.theme = saved;
-toggle.checked = saved === 'dark';
+setTheme(saved);
 
 /* toggle handler */
 toggle.addEventListener('change', () => {
   const mode = toggle.checked ? 'dark' : 'light';
-  root.dataset.theme = mode;
+  setTheme(mode);
   localStorage.setItem('theme', mode);
 });
 
-/* load markdown → build cards */
+/* helper */
+function setTheme(mode){
+  root.dataset.theme = mode;
+  toggle.checked = mode === 'dark';
+  label.textContent = mode === 'dark' ? 'Dark Mode' : 'Light Mode';
+}
+
+/* markdown → cards */
 fetch(markdownUrl)
   .then(r=>r.ok?r.text():Promise.reject(r.status))
-  .then(mdRaw=>{
-    const md = mdRaw.replace(/^• /gm,"- ");
+  .then(raw=>{
+    const md = raw.replace(/^• /gm,"- ");
     const grid=document.getElementById('grid');
     grid.innerHTML = marked.parse(md);
 
@@ -159,22 +172,22 @@ fetch(markdownUrl)
     });
 
     grid.querySelectorAll('section').forEach(section=>{
-      const nodes=[...section.childNodes].filter(x=>x!==section.querySelector('h2'));
+      const rest=[...section.childNodes].filter(x=>x!==section.querySelector('h2'));
       let art=null;
-      nodes.forEach(n=>{
+      rest.forEach(n=>{
         if(n.querySelector&&n.querySelector('strong')){
           art=document.createElement('details');
           const s=document.createElement('summary');
           s.textContent=n.querySelector('strong').textContent;
-          art.appendChild(s); section.appendChild(art);
+          art.appendChild(s);section.appendChild(art);
         }
         art?.appendChild(n);
       });
     });
 
-    /* GSAP reveal */
-    const io=new IntersectionObserver(ent=>{
-      ent.forEach(e=>{
+    /* reveal anim */
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
         if(e.isIntersecting){
           gsap.to(e.target,{y:0,scale:1,opacity:1,duration:.9,ease:'expo.out'});
           io.unobserve(e.target);
@@ -183,13 +196,13 @@ fetch(markdownUrl)
     },{threshold:.15});
     document.querySelectorAll('section').forEach(s=>io.observe(s));
 
-    /* spring accordion */
+    /* accordion spring */
     document.querySelectorAll('details').forEach(d=>{
       d.addEventListener('toggle',()=>{
         const body=d.querySelector('summary').nextElementSibling;
         if(!body)return;
         const from=d.open?0:body.offsetHeight;
-        const to=d.open?body.offsetHeight:0;
+        const to  =d.open?body.offsetHeight:0;
         popmotion.spring({from,to,stiffness:180,damping:22})
           .start(v=>body.style.height=v+'px');
       });
@@ -197,7 +210,7 @@ fetch(markdownUrl)
   })
   .catch(e=>{
     document.getElementById('grid').innerHTML=
-      `<p style="color:#f55;font-weight:700">Could not load news<br>${e}</p>`;
+      `<p style="color:#ff4757;font-weight:700">Could not load news<br>${e}</p>`;
   });
 </script>
 </body>
