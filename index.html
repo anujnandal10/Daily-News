@@ -16,10 +16,10 @@
 <style>
 /* ---------- THEME VARS ---------- */
 :root{
-  --accentA:#5ea5ff;     /* blue-purple duo */
-  --accentB:#c54bff;
+  --accentA:#4d9bff;
+  --accentB:#bd42ff;
   --bg-outer:#0c0e1f;
-  --txt-light:#f9fafb;
+  --txt-light:#fafafa;
   --txt-dark:#101010;
   --glass-light:rgba(255,255,255,.7);
   --glass-dark:rgba(30,30,30,.55);
@@ -42,9 +42,7 @@ body{
 }
 
 /* ---------- HERO BACKDROP ---------- */
-.bg{
-  position:fixed;inset:0;z-index:-3;overflow:hidden;
-}
+.bg{position:fixed;inset:0;z-index:-3;overflow:hidden}
 .plasma{
   position:absolute;width:140vmax;height:140vmax;top:-60vmax;left:-20vmax;
   background:radial-gradient(circle at 30% 30%,var(--accentA) 0%,transparent 60%),
@@ -68,26 +66,31 @@ nav{
   border-bottom:1px solid rgba(255,255,255,.1);
 }
 nav .wrap{
-  max-width:1200px;margin:0 auto;padding:1.1rem 1.6rem;
-  display:flex;align-items:center;gap:.3em;
-  font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;
+  max-width:1200px;margin:0 auto;padding:1.05rem 1.6rem;
+  display:flex;align-items:center;gap:.25em;
+  font-size:clamp(1.7rem,4vw,2.55rem);font-weight:700;
 }
 .brand{
-  --grad:linear-gradient(100deg,var(--accentA),var(--accentB));
-  background:var(--grad);background-size:200% 200%;
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:gradMove 8s ease-in-out infinite;
-  text-shadow:0 0 18px rgba(0,0,0,.35),0 0 20px var(--accentA);
+  color:var(--txt);                     /* PURE white/black fill */
+  -webkit-text-stroke:.6px var(--accentA); /* crisp outline */
+  text-shadow:
+    0 0 8px rgba(0,0,0,.35),
+    0 0 14px var(--accentA);            /* electric halo */
+  letter-spacing:.02em;
 }
-@keyframes gradMove{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.brand-dot{font-family:Orbitron,sans-serif;color:var(--accentA);animation:dotPulse 2s ease-in-out infinite}
+.brand-dot{
+  font-family:Orbitron,sans-serif;
+  color:var(--accentA);
+  animation:dotPulse 2s ease-in-out infinite;
+}
 @keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.4}}
+/* subtle glow bar */
 nav::after{
   content:"";position:absolute;left:0;bottom:-3px;width:100%;height:3px;
-  background:var(--grad);filter:blur(8px);opacity:.55;
-  animation:barFade 12s ease-in-out infinite;
+  background:linear-gradient(90deg,var(--accentA),var(--accentB));
+  filter:blur(8px);opacity:.5;animation:barFade 10s ease-in-out infinite;
 }
-@keyframes barFade{0%,100%{opacity:.55}50%{opacity:.15}}
+@keyframes barFade{0%,100%{opacity:.5}50%{opacity:.15}}
 
 /* ---------- MAIN GRID ---------- */
 main{max-width:1200px;margin:3.2rem auto 6rem;padding:0 1.4rem}
@@ -103,21 +106,19 @@ section{
   transform:translateY(60px) scale(.96);opacity:0;
 }
 h2{
-  font-size:1.3rem;margin-bottom:1.2rem;font-weight:700;
-  color:var(--accentA);text-shadow:0 0 8px rgba(0,0,0,.25);
-  letter-spacing:.02em;
+  font-size:1.32rem;margin-bottom:1.25rem;font-weight:700;
+  color:var(--accentA);text-shadow:0 0 10px rgba(0,0,0,.25);
 }
 details{
-  margin:1rem 0;border-left:3px solid var(--accentA);padding-left:1rem
+  margin:1.05rem 0;border-left:3px solid var(--accentA);padding-left:1.1rem
 }
 summary{
   cursor:pointer;list-style:none;font-weight:700;font-size:1.05rem;
-  color:var(--txt);line-height:1.45;
-  position:relative;padding-right:1.6rem;
+  color:var(--txt);line-height:1.46;position:relative;padding-right:1.7rem;
 }
 summary::after{
-  content:"›";position:absolute;right:0;top:0;transform-origin:center;
-  transition:.25s;font-size:1.2rem;filter:brightness(2)
+  content:"›";position:absolute;right:0;top:0;transition:.25s;
+  font-size:1.25rem;filter:brightness(2)
 }
 details[open] summary::after{transform:rotate(90deg)}
 details p,details ul{margin:.55rem 0}
@@ -130,7 +131,7 @@ ul{padding-left:1.2rem}
 }
 
 /* ---------- FOOT ---------- */
-footer{font-size:.8rem;text-align:center;margin:4rem 0;color:var(--txt);opacity:.6}
+footer{font-size:.8rem;text-align:center;margin:4rem 0;color:var(--txt);opacity:.65}
 @media (min-width:800px){
   ::-webkit-scrollbar{width:10px}
   ::-webkit-scrollbar-thumb{background:var(--accentA);border-radius:6px}
@@ -150,32 +151,32 @@ footer{font-size:.8rem;text-align:center;margin:4rem 0;color:var(--txt);opacity:
   </div>
 </nav>
 
-<!-- dynamic grid -->
+<!-- grid will be injected -->
 <main><div id="grid" class="grid"></div></main>
 
 <footer>© 2025 News Digest — Sources as cited</footer>
 
 <script>
-/* ------  EDIT THIS ONE LINE DAILY  ------ */
+/* ==========  CHANGE THIS ONE LINE DAILY  ========== */
 const markdownUrl = "news/Daily%20News%202025-06-17.md";
-/* ---------------------------------------- */
+/* ================================================== */
 
 fetch(markdownUrl)
   .then(r=>r.ok?r.text():Promise.reject("File not found ("+r.status+")"))
   .then(raw=>{
-    const md=raw.replace(/^• /gm,"- ");
-    const grid=document.getElementById("grid");
+    const md = raw.replace(/^• /gm,"- ");
+    const grid = document.getElementById("grid");
     grid.innerHTML = marked.parse(md);
 
-    /* group H2 blocks into <section> cards */
+    /* group by H2 → section card */
     let sec=null;
-    Array.from(grid.childNodes).forEach(n=>{
-      if(n.nodeType!==1) return;
+    [...grid.childNodes].forEach(n=>{
+      if(n.nodeType!==1)return;
       if(n.tagName==="H2"){sec=document.createElement("section");n.before(sec);}
       sec&&sec.appendChild(n);
     });
 
-    /* convert bold paragraph blocks → details */
+    /* headline paragraphs → details */
     grid.querySelectorAll("section").forEach(section=>{
       const parts=[...section.childNodes].filter(x=>x!==section.querySelector("h2"));
       let art=null;
@@ -184,13 +185,13 @@ fetch(markdownUrl)
           art=document.createElement("details");
           const sum=document.createElement("summary");
           sum.textContent=n.querySelector("strong").textContent;
-          art.appendChild(sum); section.appendChild(art);
+          art.appendChild(sum);section.appendChild(art);
         }
         art?.appendChild(n);
       });
     });
 
-    /* SCROLL REVEAL via GSAP */
+    /* entrance animation */
     const io=new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
@@ -201,21 +202,21 @@ fetch(markdownUrl)
     },{threshold:.15});
     document.querySelectorAll("section").forEach(s=>io.observe(s));
 
-    /* SPRINGY ACCORDION */
+    /* springy accordion */
     document.querySelectorAll("details").forEach(d=>{
       d.addEventListener("toggle",()=>{
         const body=d.querySelector("summary").nextElementSibling;
-        if(!body) return;
+        if(!body)return;
         const from=d.open?0:body.offsetHeight;
         const to  =d.open?body.offsetHeight:0;
-        popmotion.spring({from,to,stiffness:180,damping:20})
+        popmotion.spring({from,to,stiffness:180,damping:22})
           .start(v=>body.style.height=v+"px");
       });
     });
   })
-  .catch(err=>{
-    document.getElementById("grid").innerHTML=
-      `<p style="color:#ff5f57;font-weight:700">Could not load the news file.<br>${err}</p>`;
+  .catch(e=>{
+    document.getElementById("grid").innerHTML =
+      `<p style="color:#ff5f57;font-weight:700">Could not load the news file.<br>${e}</p>`;
   });
 </script>
 </body>
