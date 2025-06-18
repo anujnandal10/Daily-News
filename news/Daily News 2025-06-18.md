@@ -1,46 +1,71 @@
-Wednesday, 18 June 2025
+### Wednesday, 18 June 2025
 
-National
+## National
+**DGCA Seeks Air India Crew Training Records After Fatal 787 Crash**  
+India’s civil-aviation regulator demanded detailed training logs from the pilots and dispatcher of last week’s Ahmedabad Boeing 787 accident.  
+• DGCA letter gives Air India 48 h to submit simulator hours, line checks and recurrent training data.  
+• Spot audits ordered across all domestic flight schools and wide-body operators.  
+• Crash on 12 June killed 68 of 321 people onboard; preliminary AAIB probe cites “uncommanded roll”.  
+(Sources: Reuters, Hindustan Times)
 
-India, Canada Restore High Commissioners After G7 MeetingPM Narendra Modi and Canadian PM Mark Carney agreed in Kananaskis to reinstate envoys, signalling a thaw after the 2023 diplomatic expulsion row.• High commissioners to be named “at an early date” as first of “calibrated steps” to normalise ties.• Foreign Secretary Vikram Misri called relationship “very important”; further confidence‑building measures planned.• Decision follows months of back‑channel talks mediated by G7 partners.(Sources: Indian Express, PTI) (indianexpress.com, theweek.in)
+## State / Regional
+**Madras HC-Directed Arrest of Tamil Nadu ADGP in Teen Kidnap Case**  
+A Chennai court had senior IPS officer H.M. Jayaram taken into custody over an inter-caste abduction.  
+• Court said two co-accused confessed to the officer’s role; remanded him to judicial custody.  
+• Supreme Court to hear a plea against the order on 18 June.  
+• MLA Poovai Jagan Moorthy told to co-operate with investigators.  
+(Sources: Times of India, Hindustan Times)
 
-DGCA Flags Maintenance Gaps After Air India 787 CrashIndia’s aviation regulator told Air India to tighten maintenance coordination following last week’s Dreamliner crash and 66 flight cancellations.• DGCA surveillance found fleet broadly compliant but noted recurring technical snags.• 13 additional 787 flights cancelled on 17 June; passengers re‑accommodated or refunded.• Crash probe panel’s interim findings expected by month‑end.(Sources: Indian Express, Hindustan Times) (indianexpress.com, hindustantimes.com)
+## World
+**Trump Leaves G7 Early as Leaders Urge Israel-Iran Ceasefire**  
+The US President cut short the Kananaskis summit; a joint statement called for de-escalation in West Asia.  
+• Trump said “Middle East needs immediate attention” before boarding Air Force One.  
+• Communiqué also reaffirmed that “Iran can never have a nuclear weapon”.  
+• PM Modi to join outreach session today; climate finance and AI on agenda.  
+(Sources: Reuters, Times of India)
 
-State / Regional
+## Business & Economy
+**Rupee Hits ₹86.27/$ Two-Month Low; Sensex Sheds 212 Points**  
+Geo-political worries and Trump’s new tariff threat pressured Indian assets.  
+• Dealers reported RBI “mildly” sold dollars to curb volatility.  
+• Brent above $92/barrel keeps bond yields elevated.  
+• Broader Nifty closed at 24,853; auto and metal stocks lagged.  
+(Sources: Reuters, Economic Times)
 
-10 Arrested, Including 4 Minors, For Gang‑Rape At Odisha’s Gopalpur BeachPolice say a 20‑year‑old student was assaulted while visiting the beach during Raja festival.• Victim’s male friend was tied up; survivor stable and under counselling.• CM Mohan Majhi terms incident “crime against humanity”; fast‑track court promised.• NCW seeks report within 72 h; charges under IPC 376‑D, POCSO Act invoked.(Sources: Indian Express, India TV) (indianexpress.com, indiatvnews.com)
+## Science & Technology
+**Google Launches ‘Safety Charter’ to Combat Online Fraud in India**  
+New programme expands AI-driven scam detection and a Delhi security engineering centre.  
+• Partnership inked with I4C for UPI fraud analytics.  
+• Google claims Messages blocks 500 m scam texts monthly; Play Protect stopped 60 m risky app installs.  
+• Charter’s pillars: user protection, enterprise cybersecurity, responsible AI.  
+(Sources: TechCrunch, Times of India)
 
-World
+## Sports
+**Neeraj Chopra Headlines Paris Diamond League Javelin Field**  
+World champion will face Weber and Peters on 20 June.  
+• Start list confirmed after Chopra’s 90.23 m national record in Doha last month.  
+• Paris meet is eighth stop of 2025 circuit and key tune-up for Worlds in Tokyo.  
+• Indian Rugby Premier League enters knockout phase in Mumbai.  
+(Sources: ESPN, Olympics.com)
 
-Israel–Iran Missile Strikes Continue Into Sixth DayBoth sides traded new salvos despite UN calls for de‑escalation.• Iranian drones hit Tel Aviv’s southern industrial zone; no fatalities reported.• Israel said it struck IRGC bases near Isfahan and missile sites around Natanz.• Global powers pushing for Geneva cease‑fire talks; Trump urges Iran’s “unconditional surrender”.(Sources: Reuters, Indian Express) (reuters.com, indianexpress.com)
+## Entertainment & Culture
+**Supreme Court Shields Kamal Haasan’s *Thug Life* From Threats**  
+Top court said mobs cannot dictate film screenings, transferring the ban case to itself.  
+• Criticised Karnataka HC suggestion that Haasan apologise over language row.  
+• Reaffirmed CBFC certificate’s primacy and warned state to ensure security.  
+• Theatre owners welcome clarity ahead of August release window.  
+(Sources: Swarajya, India Today)
 
-Business & Economy
+## Electric Vehicles & Clean Mobility
+**VinFast Ties Up With Global Assure Ahead of VF6/VF7 India Launch**  
+Vietnamese EV maker will deploy nationwide roadside assistance and mobile charging vans.  
+• Bookings open in July; Tamil Nadu plant begins trial production in July with 50 k units/yr capacity.  
+• VF7 offers claimed 450 km range from 75.3 kWh pack; target price ₹60–65 lakh.  
+• Partnership includes 24×7 call-centre and on-site minor repairs.  
+(Sources: HT Auto, Moneycontrol)
 
-Oil Prices Edge Above $76 As Mideast Risk Lifts CrudeBrent rose 0.3 % in Asian trade on supply fears linked to Israel–Iran conflict.• Volatility gauge hit three‑year high; analysts see $80 “risk premium” if conflict widens.• Equities mixed; investors await U.S. Fed minutes tonight.(Sources: Reuters, Bloomberg) (reuters.com, bloomberg.com)
+## Fintech
+*No reliable updates for this section today.*
 
-Science & Technology
-
-Imec Sets Record For GaN‑on‑Silicon RF Transistor EfficiencyBelgian research hub reports breakthrough suitable for 6G power amplifiers.• E‑mode MOSHEMT hits record‑low 0.024 Ω·mm contact resistance and high output power.• Achievement could cut base‑station energy use by 30 %.(Sources: TechXplore, Imec press release) (techxplore.com, imec-int.com)
-
-Sports
-
-Nasser Hussain Tips England 3‑1 Over New‑Look IndiaEx‑captain says absence of Rohit Sharma & Virat Kohli weakens tourists ahead of 20 June Leeds opener.• India led by Shubman Gill; series opens new WTC cycle.• Graeme Swann’s separate remark calling series a “warm‑up” for Ashes draws fan backlash.(Sources: Times of India, Hindustan Times) (timesofindia.indiatimes.com, hindustantimes.com)
-
-Entertainment & Culture
-
-Samara Sahni Goes Viral After Mumbai Outing With Neetu KapoorRanbir Kapoor’s 13‑year‑old niece charms paparazzi during family dinner.• Video shows poised interaction; social media dubs her “Gen‑Z Kapoor star”.• Riddhima Kapoor Sahni praises daughter’s confidence.(Sources: Times of India, Moneycontrol) (timesofindia.indiatimes.com, moneycontrol.com)
-
-Electric Vehicles & Clean Mobility
-
-China’s Rare‑Earth Export Curbs Threaten India’s EV Supply ChainAutomakers warn production could halt by July amid magnet shortages.• China controls ~90 % of global NdFeB magnet output; licence approvals stalled since April.• Govt planning domestic processing incentives; analysts say self‑sufficiency decade away.(Sources: Reuters, The Print) (reuters.com, theprint.in)
-
-VinFast Ties Up With Global Assure For Pan‑India After‑Sales NetworkVietnamese EV maker readies VF 6 & VF 7 launch with 24×7 roadside, mobile charging support.• Partnership to deploy service vans in 50 cities; call‑centre in Gurugram operational by August.(Sources: TOI Auto, Economic Times) (timesofindia.indiatimes.com, m.economictimes.com)
-
-Fintech
-
-NPCI Cuts UPI Response Time To 8–10 SecondsNew routing engine halves wait times to speed retail payments.• NPCI also tightens beneficiary‑name validation and caps daily balance checks.• UPI clocked 14.3 bn transactions in May; faster rails target 20 bn festive‑season peak.(Sources: The Federal, Times of India) (thefederal.com, timesofindia.indiatimes.com)
-
-SMEs and Banks
-
-UGRO Capital To Acquire Profectus Capital In ₹1,400‑Cr All‑Cash DealData‑tech NBFC says buy will expand MSME loan book by 30 %.• Integration to create ₹10,000‑cr combined AUM focused on secured lending.• Deal subject to RBI nod; closure expected Q4 FY26.(Sources: TOI Business, Economic Times) (timesofindia.indiatimes.com, economictimes.indiatimes.com)
-
+## SME and Banks
+*No reliable updates for this section today.*
