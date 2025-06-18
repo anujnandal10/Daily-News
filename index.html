@@ -10,7 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@popmotion/spring@10.0.41/dist/popmotion-spring.min.js"></script>
 
 <style>
-/* ---------- THEME TOKENS ---------- */
+/* === THEME TOKENS === */
 :root{
   --accent:#4d9bff;
   --bg:#fafafa;              --txt:#111;
@@ -25,7 +25,7 @@
   --heading:#fff;            --halo:0 0 10px rgba(77,155,255,.45);
 }
 
-/* ---------- RESET ---------- */
+/* === RESET & BASE === */
 *,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
 body{
   min-height:100%;font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,
@@ -34,32 +34,23 @@ body{
   overflow-x:hidden;
 }
 
-/* ---------- NAV ---------- */
+/* === NAVBAR === */
 nav{
   position:sticky;top:0;z-index:100;background:var(--glass);
   backdrop-filter:blur(18px);border-bottom:1px solid var(--card-brd);
   transition:background .35s;
 }
 nav .wrap{
-  max-width:1200px;margin:auto;padding:1rem 1.6rem;
-  display:flex;align-items:center;column-gap:1rem;
+  display:flex;align-items:center;gap:1.5rem;padding:1rem 1.6rem;width:100%;
 }
 .brand{
-  font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;flex:0 0 auto;
+  font-size:clamp(1.55rem,4vw,2.4rem);font-weight:700;margin-right:auto;
   color:var(--heading);-webkit-text-stroke:.5px var(--accent);
   text-shadow:var(--halo);transition:color .35s,text-shadow .35s;
 }
-.theme-toggle{
-  margin-left:auto;display:flex;align-items:center;column-gap:.65rem;
-  flex-shrink:0;
-}
-.theme-label{
-  width:3rem;               /* <-- fixed width so DM / LM never shift */
-  text-align:center;font-weight:600;font-size:.9rem;
-  transition:opacity .3s;
-}
-[data-theme="light"] .label-dark{opacity:0}
-[data-theme="dark"]  .label-light{opacity:0}
+/* toggle pack */
+.theme-toggle{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
+.theme-label{width:3rem;text-align:center;font-weight:600;font-size:.9rem}
 .switch{position:relative;width:52px;height:26px}
 .switch input{opacity:0;width:0;height:0}
 .slider{
@@ -68,23 +59,22 @@ nav .wrap{
 }
 .slider::before{
   content:"";position:absolute;width:18px;height:18px;top:4px;left:4px;
-  border-radius:50%;background:#fff;transition:.4s
+  border-radius:50%;background:#fff;transition:.4s;
 }
 .switch input:checked + .slider::before{transform:translateX(24px)}
 
-/* ---------- GRID ---------- */
+/* === LAYOUT === */
 main{max-width:1200px;margin:3rem auto 6rem;padding:0 1.4rem}
 .grid{columns:320px 3;column-gap:2rem}
 @media(max-width:900px){.grid{columns:280px 2}}
 @media(max-width:600px){.grid{columns:1 1}}
-
 main h3{font-size:1.15rem;font-weight:600;margin:0 0 2.4rem}
 
 section{
   break-inside:avoid;margin:0 0 2rem;padding:1.9rem 1.6rem 1.25rem;
-  background:var(--card);border:1px solid var(--card-brd);
-  border-radius:22px;backdrop-filter:blur(24px);
-  transform:translateY(30px) scale(.97);opacity:0;will-change:transform,opacity;
+  background:var(--card);border:1px solid var(--card-brd);border-radius:22px;
+  backdrop-filter:blur(24px);transform:translateY(30px) scale(.97);
+  opacity:0;will-change:transform,opacity;
   transition:background .35s,border-color .35s;
 }
 h2{font-size:1.3rem;margin-bottom:1.25rem;font-weight:700;
@@ -104,7 +94,7 @@ ul{padding-left:1.2rem;margin:.5rem 0}
                 box-shadow:0 22px 44px rgba(0,0,0,.28)}
 }
 
-/* ---------- FOOT ---------- */
+/* === FOOT === */
 footer{text-align:center;font-size:.8rem;margin:4rem 0;color:var(--txt);opacity:.65}
 @media(min-width:800px){
   ::-webkit-scrollbar{width:10px}
@@ -123,8 +113,7 @@ footer{text-align:center;font-size:.8rem;margin:4rem 0;color:var(--txt);opacity:
         <input id="themeToggle" type="checkbox">
         <span class="slider"></span>
       </label>
-      <span id="themeLabel" class="theme-label label-light">LM</span>
-      <span class="theme-label label-dark">DM</span>
+      <span id="themeLabel" class="theme-label">LM</span>
     </div>
   </div>
 </nav>
@@ -134,81 +123,66 @@ footer{text-align:center;font-size:.8rem;margin:4rem 0;color:var(--txt);opacity:
 <footer>© 2025 News Digest — Sources as cited</footer>
 
 <script>
-/* ---------- DAILY UPDATE ---------- */
+/* —— update this each day —— */
 const markdownUrl = "news/Daily%20News%202025-06-17.md";
-/* ---------------------------------- */
+/* --------------------------- */
 
 const root   = document.documentElement;
 const toggle = document.getElementById('themeToggle');
 const label  = document.getElementById('themeLabel');
 
-/* initial theme */
-applyTheme(localStorage.getItem('theme') || 'light');
-
-/* toggle handler */
-toggle.addEventListener('change',()=>{
-  const mode = toggle.checked ? 'dark' : 'light';
-  applyTheme(mode); localStorage.setItem('theme',mode);
-});
-function applyTheme(mode){
-  root.dataset.theme = mode;
-  toggle.checked = mode==='dark';
-  label.textContent = mode==='dark'?'DM':'LM';
+/* init theme */
+applyTheme(localStorage.getItem('theme')||'light');
+toggle.addEventListener('change',()=>applyTheme(toggle.checked?'dark':'light'));
+function applyTheme(m){
+  root.dataset.theme=m;toggle.checked=m==='dark';
+  label.textContent=m==='dark'?'DM':'LM';
+  localStorage.setItem('theme',m);
 }
 
-/* markdown → cards */
+/* build content */
 fetch(markdownUrl)
-  .then(r=>r.ok?r.text():Promise.reject(r.status))
-  .then(raw=>{
-    const grid=document.getElementById('grid');
-    grid.innerHTML = marked.parse(raw.replace(/^• /gm,"- "));
-
-    let sec=null;
-    [...grid.childNodes].forEach(n=>{
-      if(n.nodeType!==1)return;
-      if(n.tagName==='H2'){sec=document.createElement('section');n.before(sec);}
-      sec&&sec.appendChild(n);
-    });
-
-    grid.querySelectorAll('section').forEach(section=>{
-      const nodes=[...section.childNodes].filter(x=>x!==section.querySelector('h2'));
-      let art=null;
-      nodes.forEach(n=>{
-        if(n.querySelector&&n.querySelector('strong')){
-          art=document.createElement('details');
-          const s=document.createElement('summary');
-          s.textContent=n.querySelector('strong').textContent;
-          art.appendChild(s); section.appendChild(art);
-        }
-        art?.appendChild(n);
-      });
-    });
-
-    /* fast reveal */
-    const io=new IntersectionObserver(e=>{
-      e.forEach(t=>{
-        if(t.isIntersecting){
-          gsap.to(t.target,{y:0,scale:1,opacity:1,duration:.6,ease:'power1.out'});
-          io.unobserve(t.target);
-        }
-      });
-    },{threshold:.15});
-    document.querySelectorAll('section').forEach(s=>io.observe(s));
-
-    /* accordion spring */
-    document.querySelectorAll('details').forEach(d=>{
-      d.addEventListener('toggle',()=>{
-        const b=d.querySelector('summary').nextElementSibling;if(!b)return;
-        popmotion.spring({
-          from:d.open?0:b.offsetHeight,to:d.open?b.offsetHeight:0,
-          stiffness:200,damping:24}).start(v=>b.style.height=v+'px');
-      });
-    });
-  })
-  .catch(e=>{
-    document.getElementById('grid').innerHTML=
-      `<p style="color:#f55;font-weight:700">Couldn’t load news (${e})</p>`;
-  });
+ .then(r=>r.ok?r.text():Promise.reject(r.status))
+ .then(md=>{
+   const grid=document.getElementById('grid');
+   grid.innerHTML=marked.parse(md.replace(/^• /gm,"- "));
+   let sec=null;
+   [...grid.childNodes].forEach(n=>{
+     if(n.nodeType!==1)return;
+     if(n.tagName==='H2'){sec=document.createElement('section');n.before(sec);}
+     sec&&sec.appendChild(n);
+   });
+   grid.querySelectorAll('section').forEach(s=>{
+     const bits=[...s.childNodes].filter(x=>x!==s.querySelector('h2'));
+     let art=null;
+     bits.forEach(n=>{
+       if(n.querySelector&&n.querySelector('strong')){
+         art=document.createElement('details');
+         const sm=document.createElement('summary');
+         sm.textContent=n.querySelector('strong').textContent;
+         art.appendChild(sm);s.appendChild(art);
+       }
+       art?.appendChild(n);
+     });
+   });
+   /* reveal */
+   const io=new IntersectionObserver(e=>{
+     e.forEach(t=>{if(t.isIntersecting){
+       gsap.to(t.target,{y:0,scale:1,opacity:1,duration:.6,ease:'power1.out'});
+       io.unobserve(t.target);} });},{threshold:.15});
+   document.querySelectorAll('section').forEach(s=>io.observe(s));
+   /* accordion spring */
+   document.querySelectorAll('details').forEach(d=>{
+     d.addEventListener('toggle',()=>{
+       const b=d.querySelector('summary').nextElementSibling;if(!b)return;
+       popmotion.spring({from:d.open?0:b.offsetHeight,to:d.open?b.offsetHeight:0,
+                         stiffness:200,damping:24})
+        .start(v=>b.style.height=v+'px');
+     });
+   });
+ })
+ .catch(e=>document.getElementById('grid').innerHTML=
+        `<p style="color:#f55;font-weight:700">Couldn’t load news (${e})</p>`);
 </script>
 </body>
 </html>
