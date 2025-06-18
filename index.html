@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Daily News • WWDC Demo</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily News • Dual-Theme Demo</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-<!-- Fonts & JS libs -->
+<!-- Fonts & libs -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
@@ -14,40 +14,49 @@
 <script src="https://cdn.jsdelivr.net/npm/@popmotion/spring@10.0.41/dist/popmotion-spring.min.js"></script>
 
 <style>
-/* ---------- THEME VARS ---------- */
+/* ---------- THEME VARIABLES ---------- */
 :root{
   --accentA:#4d9bff;
   --accentB:#bd42ff;
-  --bg-outer:#0c0e1f;
-  --glass-light:rgba(255,255,255,.7);
-  --glass-dark:rgba(30,30,30,.55);
-  --card-light:rgba(255,255,255,.55);
-  --card-dark:rgba(255,255,255,.06);
-
-  --txt:#fafafa;           /* default (dark-mode) */
-  --heading:#ffffff;       /* NEW – high-contrast heading */
-  --heading-shadow:0 0 10px rgba(77,155,255,.45); /* halo */
+  /* neutral defaults – will be overridden by [data-theme] rules */
+  --bg:#0c0e1f;
+  --txt:#f3f4f6;
+  --heading:#ffffff;
+  --heading-shadow:0 0 10px rgba(77,155,255,.45);
+  --glass:rgba(30,30,30,.55);
+  --card:rgba(255,255,255,.06);
+  --card-brd:rgba(255,255,255,.18);
 }
-@media (prefers-color-scheme:light){
-  :root{
-    --txt:#101010;
-    --heading:#000000;                          /* black on light */
-    --heading-shadow:0 0 8px rgba(77,155,255,.35);
-  }
+[data-theme="light"]{
+  --bg:#f5f7fd;
+  --txt:#101010;
+  --heading:#000;
+  --heading-shadow:0 0 8px rgba(77,155,255,.35);
+  --glass:rgba(255,255,255,.7);
+  --card:rgba(255,255,255,.55);
+  --card-brd:rgba(0,0,0,.12);
+}
+[data-theme="dark"]{
+  --bg:#0c0e1f;
+  --txt:#f3f4f6;
+  --heading:#ffffff;
+  --heading-shadow:0 0 10px rgba(77,155,255,.45);
+  --glass:rgba(30,30,30,.55);
+  --card:rgba(255,255,255,.06);
+  --card-brd:rgba(255,255,255,.18);
 }
 
-/* ---------- BASE ---------- */
+/* ---------- RESET ---------- */
 *,*:before,*:after{box-sizing:border-box;margin:0}
 html,body{height:100%}
 body{
   font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
-  background:var(--bg-outer);
-  color:var(--txt);
-  overflow-x:hidden;
+  background:var(--bg); color:var(--txt); overflow-x:hidden;
+  transition:background .35s ease,color .35s ease;
 }
 
-/* ---------- HERO BACKDROP ---------- */
-.bg{position:fixed;inset:0;z-index:-3;overflow:hidden}
+/* ---------- BACKDROP ---------- */
+.bg{position:fixed;inset:0;z-index:-3;overflow:hidden;pointer-events:none}
 .plasma{
   position:absolute;width:140vmax;height:140vmax;top:-60vmax;left:-20vmax;
   background:radial-gradient(circle at 30% 30%,var(--accentA) 0%,transparent 60%),
@@ -63,58 +72,61 @@ body{
 }
 @keyframes starScroll{to{background-position:0 512px}}
 
-/* ---------- NAV ---------- */
+/* ---------- NAVBAR ---------- */
 nav{
   position:sticky;top:0;z-index:999;
-  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  background:var(--glass-dark);
-  border-bottom:1px solid rgba(255,255,255,.1);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  background:var(--glass);
+  border-bottom:1px solid var(--card-brd);
+  transition:background .35s ease;
 }
-@media (prefers-color-scheme:light){nav{background:var(--glass-light)}}
 nav .wrap{
-  max-width:1200px;margin:0 auto;padding:1.05rem 1.6rem;
-  display:flex;align-items:center;gap:.25em;
-  font-size:clamp(1.7rem,4vw,2.55rem);font-weight:700;
+  max-width:1200px;margin:0 auto;padding:1rem 1.6rem;
+  display:flex;align-items:center;justify-content:space-between;
 }
 .brand{
-  color:var(--txt);
-  -webkit-text-stroke:.6px var(--accentA);
-  text-shadow:0 0 14px var(--accentA);
+  font-size:clamp(1.7rem,4vw,2.5rem);font-weight:700;letter-spacing:.02em;
+  color:var(--heading);-webkit-text-stroke:.6px var(--accentA);
+  text-shadow:var(--heading-shadow);
+  display:flex;align-items:center;gap:.22em;
 }
-.brand-dot{
-  font-family:Orbitron,sans-serif;
-  color:var(--accentA);
-  animation:dotPulse 2s ease-in-out infinite;
+.brand-dot{font-family:Orbitron,sans-serif;color:var(--accentA)}
+/* theme switcher */
+.toggle{
+  cursor:pointer;position:relative;width:3.4rem;height:1.7rem;
 }
-@keyframes dotPulse{0%,100{opacity:1}50%{opacity:.4}}
-nav::after{
-  content:"";position:absolute;left:0;bottom:-3px;width:100%;height:3px;
+.toggle input{opacity:0;width:0;height:0}
+.slider{
+  position:absolute;inset:0;border-radius:999px;
   background:linear-gradient(90deg,var(--accentA),var(--accentB));
-  filter:blur(8px);opacity:.5;animation:barFade 10s ease-in-out infinite;
+  transition:.4s;
 }
-@keyframes barFade{0%,100%{opacity:.5}50%{opacity:.12}}
+.slider::before{
+  content:"";position:absolute;height:1.3rem;width:1.3rem;left:.22rem;top:.2rem;
+  border-radius:50%;background:#fff;transition:.4s;
+}
+input:checked + .slider::before{transform:translateX(1.7rem)}
+input:checked + .slider{filter:hue-rotate(180deg)}
 
-/* ---------- MAIN GRID ---------- */
-main{max-width:1200px;margin:3.2rem auto 6rem;padding:0 1.4rem}
+/* ---------- GRID ---------- */
+main{max-width:1200px;margin:3rem auto 6rem;padding:0 1.4rem}
 .grid{columns:320px 3;column-gap:2rem}
-@media (max-width:900px){.grid{columns:280px 2}}
-@media (max-width:600px){.grid{columns:1 1}}
+@media(max-width:900px){.grid{columns:280px 2}}
+@media(max-width:600px){.grid{columns:1 1}}
 
 section{
   break-inside:avoid;margin:0 0 2rem;
-  background:var(--card-dark);
-  border:1px solid rgba(255,255,255,.18);
+  background:var(--card);border:1px solid var(--card-brd);
   backdrop-filter:blur(28px);
   border-radius:26px;padding:1.8rem 1.6rem 1.25rem;
   transform:translateY(60px) scale(.96);opacity:0;
-}
-@media (prefers-color-scheme:light){
-  section{background:var(--card-light);border:1px solid rgba(0,0,0,.12)}
+  transition:background .35s ease,border-color .35s ease;
 }
 h2{
   font-size:1.34rem;margin-bottom:1.25rem;font-weight:700;
-  color:var(--heading);                     /* NEW colour */
-  text-shadow:var(--heading-shadow);        /* NEW halo */
+  color:var(--heading);text-shadow:var(--heading-shadow);
+  transition:color .35s ease,text-shadow .35s ease;
 }
 details{
   margin:1.05rem 0;border-left:3px solid var(--accentA);padding-left:1.1rem
@@ -124,13 +136,13 @@ summary{
   color:var(--txt);line-height:1.46;position:relative;padding-right:1.7rem;
 }
 summary::after{
-  content:"›";position:absolute;right:0;top:0;transition:.25s;
-  font-size:1.25rem;filter:brightness(2)
+  content:"›";position:absolute;right:0;top:0;font-size:1.25rem;
+  transition:.25s;filter:brightness(2)
 }
 details[open] summary::after{transform:rotate(90deg)}
 ul{padding-left:1.2rem;margin:.55rem 0}
 
-@media (hover:hover){
+@media(hover:hover){
   section{transition:transform .35s cubic-bezier(.25,.8,.25,1),box-shadow .35s}
   section:hover{transform:rotateX(.6deg) rotateY(-2deg) translateY(-8px) scale(1.01);
                 box-shadow:0 22px 44px rgba(0,0,0,.28)}
@@ -138,7 +150,7 @@ ul{padding-left:1.2rem;margin:.55rem 0}
 
 /* ---------- FOOT ---------- */
 footer{font-size:.8rem;text-align:center;margin:4rem 0;color:var(--txt);opacity:.65}
-@media (min-width:800px){
+@media(min-width:800px){
   ::-webkit-scrollbar{width:10px}
   ::-webkit-scrollbar-thumb{background:var(--accentA);border-radius:6px}
 }
@@ -149,80 +161,104 @@ footer{font-size:.8rem;text-align:center;margin:4rem 0;color:var(--txt);opacity:
 <!-- backdrop -->
 <div class="bg"><div class="plasma"></div><div class="stars"></div></div>
 
-<!-- nav -->
+<!-- navbar with theme switch -->
 <nav>
   <div class="wrap">
-    <span class="brand">Daily&nbsp;News&nbsp;Briefing</span>
-    <span class="brand-dot">✦</span>
+    <div class="brand">
+      Daily&nbsp;News&nbsp;Briefing <span class="brand-dot">✦</span>
+    </div>
+
+    <label class="toggle" title="Toggle light / dark">
+      <input id="themeToggle" type="checkbox" />
+      <span class="slider"></span>
+    </label>
   </div>
 </nav>
 
-<!-- grid -->
+<!-- grid placeholder -->
 <main><div id="grid" class="grid"></div></main>
 
 <footer>© 2025 News Digest — Sources as cited</footer>
 
 <script>
-/* ========== UPDATE THIS LINE DAILY ========== */
+/* --------- ONE-LINE DAILY UPDATE --------- */
 const markdownUrl = "news/Daily%20News%202025-06-17.md";
-/* ============================================ */
+/* ---------------------------------------- */
 
+/* ---------- THEME LOGIC ---------- */
+const root = document.documentElement;
+const toggle = document.getElementById('themeToggle');
+
+/* 1. initial theme = saved → else system */
+const saved = localStorage.getItem('theme');
+const system = window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark';
+const current = saved || system;
+root.dataset.theme = current;
+toggle.checked = current === 'light';
+
+/* 2. switch handler */
+toggle.addEventListener('change', () => {
+  const mode = toggle.checked ? 'light' : 'dark';
+  root.dataset.theme = mode;
+  localStorage.setItem('theme', mode);
+});
+
+/* ---------- MARKDOWN → CARDS ---------- */
 fetch(markdownUrl)
-  .then(r=>r.ok?r.text():Promise.reject("File not found ("+r.status+")"))
-  .then(raw=>{
-    const md = raw.replace(/^• /gm,"- ");
-    const grid = document.getElementById("grid");
+  .then(r => r.ok ? r.text() : Promise.reject("File not found (" + r.status + ")"))
+  .then(raw => {
+    const md = raw.replace(/^• /gm, "- ");
+    const grid = document.getElementById('grid');
     grid.innerHTML = marked.parse(md);
 
     /* H2 → section */
-    let sec=null;
-    [...grid.childNodes].forEach(n=>{
-      if(n.nodeType!==1)return;
-      if(n.tagName==="H2"){sec=document.createElement("section");n.before(sec);}
-      sec&&sec.appendChild(n);
-    });
+    let sec = null;
+    for (const n of [...grid.childNodes]) {
+      if (n.nodeType !== 1) continue;
+      if (n.tagName === 'H2') { sec = document.createElement('section'); n.before(sec); }
+      sec && sec.appendChild(n);
+    }
 
     /* headlines → details */
-    grid.querySelectorAll("section").forEach(section=>{
-      const blocks=[...section.childNodes].filter(x=>x!==section.querySelector("h2"));
-      let art=null;
-      blocks.forEach(n=>{
-        if(n.querySelector && n.querySelector("strong")){
-          art=document.createElement("details");
-          const sum=document.createElement("summary");
-          sum.textContent=n.querySelector("strong").textContent;
-          art.appendChild(sum);section.appendChild(art);
+    grid.querySelectorAll('section').forEach(section => {
+      const rest = [...section.childNodes].filter(x => x !== section.querySelector('h2'));
+      let art = null;
+      rest.forEach(n => {
+        if (n.querySelector && n.querySelector('strong')) {
+          art = document.createElement('details');
+          const sum = document.createElement('summary');
+          sum.textContent = n.querySelector('strong').textContent;
+          art.appendChild(sum); section.appendChild(art);
         }
         art?.appendChild(n);
       });
     });
 
     /* reveal animation */
-    const io=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          gsap.to(e.target,{y:0,scale:1,opacity:1,duration:.9,ease:"expo.out"});
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          gsap.to(e.target, { y: 0, scale: 1, opacity: 1, duration: .9, ease: 'expo.out' });
           io.unobserve(e.target);
         }
       });
-    },{threshold:.15});
-    document.querySelectorAll("section").forEach(s=>io.observe(s));
+    }, { threshold: .15 });
+    document.querySelectorAll('section').forEach(s => io.observe(s));
 
     /* spring accordion */
-    document.querySelectorAll("details").forEach(d=>{
-      d.addEventListener("toggle",()=>{
-        const body=d.querySelector("summary").nextElementSibling;
-        if(!body)return;
-        const from=d.open?0:body.offsetHeight;
-        const to  =d.open?body.offsetHeight:0;
-        popmotion.spring({from,to,stiffness:180,damping:22})
-          .start(v=>body.style.height=v+"px");
+    document.querySelectorAll('details').forEach(d => {
+      d.addEventListener('toggle', () => {
+        const body = d.querySelector('summary').nextElementSibling;
+        if (!body) return;
+        const from = d.open ? 0 : body.offsetHeight;
+        const to = d.open ? body.offsetHeight : 0;
+        popmotion.spring({ from, to, stiffness: 180, damping: 22 })
+          .start(v => body.style.height = v + 'px');
       });
     });
-
   })
-  .catch(err=>{
-    document.getElementById("grid").innerHTML =
+  .catch(err => {
+    document.getElementById('grid').innerHTML =
       `<p style="color:#ff5f57;font-weight:700">Could not load the news file.<br>${err}</p>`;
   });
 </script>
