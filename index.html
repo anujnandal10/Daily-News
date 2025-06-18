@@ -19,26 +19,31 @@
   --accentA:#4d9bff;
   --accentB:#bd42ff;
   --bg-outer:#0c0e1f;
-  --txt-light:#fafafa;
-  --txt-dark:#101010;
   --glass-light:rgba(255,255,255,.7);
   --glass-dark:rgba(30,30,30,.55);
   --card-light:rgba(255,255,255,.55);
   --card-dark:rgba(255,255,255,.06);
+
+  --txt:#fafafa;           /* default (dark-mode) */
+  --heading:#ffffff;       /* NEW – high-contrast heading */
+  --heading-shadow:0 0 10px rgba(77,155,255,.45); /* halo */
 }
 @media (prefers-color-scheme:light){
-  :root{ --txt:#101010; --glass:var(--glass-light); --card:var(--card-light); }
-}
-@media (prefers-color-scheme:dark){
-  :root{ --txt:#f3f4f6; --glass:var(--glass-dark); --card:var(--card-dark); }
+  :root{
+    --txt:#101010;
+    --heading:#000000;                          /* black on light */
+    --heading-shadow:0 0 8px rgba(77,155,255,.35);
+  }
 }
 
-/* ---------- RESET ---------- */
+/* ---------- BASE ---------- */
 *,*:before,*:after{box-sizing:border-box;margin:0}
 html,body{height:100%}
 body{
   font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
-  background:var(--bg-outer); color:var(--txt); overflow-x:hidden;
+  background:var(--bg-outer);
+  color:var(--txt);
+  overflow-x:hidden;
 }
 
 /* ---------- HERO BACKDROP ---------- */
@@ -62,35 +67,32 @@ body{
 nav{
   position:sticky;top:0;z-index:999;
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  background:var(--glass);
+  background:var(--glass-dark);
   border-bottom:1px solid rgba(255,255,255,.1);
 }
+@media (prefers-color-scheme:light){nav{background:var(--glass-light)}}
 nav .wrap{
   max-width:1200px;margin:0 auto;padding:1.05rem 1.6rem;
   display:flex;align-items:center;gap:.25em;
   font-size:clamp(1.7rem,4vw,2.55rem);font-weight:700;
 }
 .brand{
-  color:var(--txt);                     /* PURE white/black fill */
-  -webkit-text-stroke:.6px var(--accentA); /* crisp outline */
-  text-shadow:
-    0 0 8px rgba(0,0,0,.35),
-    0 0 14px var(--accentA);            /* electric halo */
-  letter-spacing:.02em;
+  color:var(--txt);
+  -webkit-text-stroke:.6px var(--accentA);
+  text-shadow:0 0 14px var(--accentA);
 }
 .brand-dot{
   font-family:Orbitron,sans-serif;
   color:var(--accentA);
   animation:dotPulse 2s ease-in-out infinite;
 }
-@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.4}}
-/* subtle glow bar */
+@keyframes dotPulse{0%,100{opacity:1}50%{opacity:.4}}
 nav::after{
   content:"";position:absolute;left:0;bottom:-3px;width:100%;height:3px;
   background:linear-gradient(90deg,var(--accentA),var(--accentB));
   filter:blur(8px);opacity:.5;animation:barFade 10s ease-in-out infinite;
 }
-@keyframes barFade{0%,100%{opacity:.5}50%{opacity:.15}}
+@keyframes barFade{0%,100%{opacity:.5}50%{opacity:.12}}
 
 /* ---------- MAIN GRID ---------- */
 main{max-width:1200px;margin:3.2rem auto 6rem;padding:0 1.4rem}
@@ -100,14 +102,19 @@ main{max-width:1200px;margin:3.2rem auto 6rem;padding:0 1.4rem}
 
 section{
   break-inside:avoid;margin:0 0 2rem;
-  background:var(--card);border:1px solid rgba(255,255,255,.18);
-  backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
-  border-radius:26px;padding:1.8rem 1.6rem 1.2rem;
+  background:var(--card-dark);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(28px);
+  border-radius:26px;padding:1.8rem 1.6rem 1.25rem;
   transform:translateY(60px) scale(.96);opacity:0;
 }
+@media (prefers-color-scheme:light){
+  section{background:var(--card-light);border:1px solid rgba(0,0,0,.12)}
+}
 h2{
-  font-size:1.32rem;margin-bottom:1.25rem;font-weight:700;
-  color:var(--accentA);text-shadow:0 0 10px rgba(0,0,0,.25);
+  font-size:1.34rem;margin-bottom:1.25rem;font-weight:700;
+  color:var(--heading);                     /* NEW colour */
+  text-shadow:var(--heading-shadow);        /* NEW halo */
 }
 details{
   margin:1.05rem 0;border-left:3px solid var(--accentA);padding-left:1.1rem
@@ -121,8 +128,7 @@ summary::after{
   font-size:1.25rem;filter:brightness(2)
 }
 details[open] summary::after{transform:rotate(90deg)}
-details p,details ul{margin:.55rem 0}
-ul{padding-left:1.2rem}
+ul{padding-left:1.2rem;margin:.55rem 0}
 
 @media (hover:hover){
   section{transition:transform .35s cubic-bezier(.25,.8,.25,1),box-shadow .35s}
@@ -151,15 +157,15 @@ footer{font-size:.8rem;text-align:center;margin:4rem 0;color:var(--txt);opacity:
   </div>
 </nav>
 
-<!-- grid will be injected -->
+<!-- grid -->
 <main><div id="grid" class="grid"></div></main>
 
 <footer>© 2025 News Digest — Sources as cited</footer>
 
 <script>
-/* ==========  CHANGE THIS ONE LINE DAILY  ========== */
+/* ========== UPDATE THIS LINE DAILY ========== */
 const markdownUrl = "news/Daily%20News%202025-06-17.md";
-/* ================================================== */
+/* ============================================ */
 
 fetch(markdownUrl)
   .then(r=>r.ok?r.text():Promise.reject("File not found ("+r.status+")"))
@@ -168,7 +174,7 @@ fetch(markdownUrl)
     const grid = document.getElementById("grid");
     grid.innerHTML = marked.parse(md);
 
-    /* group by H2 → section card */
+    /* H2 → section */
     let sec=null;
     [...grid.childNodes].forEach(n=>{
       if(n.nodeType!==1)return;
@@ -176,12 +182,12 @@ fetch(markdownUrl)
       sec&&sec.appendChild(n);
     });
 
-    /* headline paragraphs → details */
+    /* headlines → details */
     grid.querySelectorAll("section").forEach(section=>{
-      const parts=[...section.childNodes].filter(x=>x!==section.querySelector("h2"));
+      const blocks=[...section.childNodes].filter(x=>x!==section.querySelector("h2"));
       let art=null;
-      parts.forEach(n=>{
-        if(n.querySelector&&n.querySelector("strong")){
+      blocks.forEach(n=>{
+        if(n.querySelector && n.querySelector("strong")){
           art=document.createElement("details");
           const sum=document.createElement("summary");
           sum.textContent=n.querySelector("strong").textContent;
@@ -191,7 +197,7 @@ fetch(markdownUrl)
       });
     });
 
-    /* entrance animation */
+    /* reveal animation */
     const io=new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
@@ -202,7 +208,7 @@ fetch(markdownUrl)
     },{threshold:.15});
     document.querySelectorAll("section").forEach(s=>io.observe(s));
 
-    /* springy accordion */
+    /* spring accordion */
     document.querySelectorAll("details").forEach(d=>{
       d.addEventListener("toggle",()=>{
         const body=d.querySelector("summary").nextElementSibling;
@@ -213,10 +219,11 @@ fetch(markdownUrl)
           .start(v=>body.style.height=v+"px");
       });
     });
+
   })
-  .catch(e=>{
+  .catch(err=>{
     document.getElementById("grid").innerHTML =
-      `<p style="color:#ff5f57;font-weight:700">Could not load the news file.<br>${e}</p>`;
+      `<p style="color:#ff5f57;font-weight:700">Could not load the news file.<br>${err}</p>`;
   });
 </script>
 </body>
