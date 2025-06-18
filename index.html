@@ -32,44 +32,39 @@
 html,body{height:100%}
 body{
   font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
-  background:var(--bg); color:var(--txt); transition:background .35s,color .35s;
-  overflow-x:hidden;
+  background:var(--bg); color:var(--txt);
+  transition:background .35s,color .35s; overflow-x:hidden;
 }
 
 /* ---------- NAVBAR ---------- */
 nav{
   position:sticky;top:0;z-index:100;
-  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  background:var(--glass);border-bottom:1px solid var(--card-brd);
-  transition:background .35s;
+  backdrop-filter:blur(18px);background:var(--glass);
+  border-bottom:1px solid var(--card-brd);transition:background .35s;
 }
 nav .wrap{
   max-width:1200px;margin:0 auto;padding:1rem 1.6rem;
   display:flex;align-items:center;justify-content:space-between;
 }
 .brand{
-  font-size:clamp(1.65rem,4vw,2.4rem);font-weight:700;letter-spacing:.02em;
+  font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;
   color:var(--heading);-webkit-text-stroke:.5px var(--accent);
   text-shadow:var(--halo);transition:color .35s,text-shadow .35s;
 }
 
 /* ---------- THEME TOGGLE ---------- */
-.theme-toggle{display:flex;align-items:center;gap:.55rem;min-width:150px}
-.theme-label{font-size:.95rem;font-weight:600;white-space:nowrap}
-
-.switch{
-  position:relative;width:52px;height:26px;flex-shrink:0;
-}
+.theme-toggle{display:flex;align-items:center;gap:.55rem;min-width:120px}
+.theme-label{font-size:.9rem;font-weight:600;white-space:nowrap}
+.switch{position:relative;width:52px;height:26px;flex-shrink:0}
 .switch input{opacity:0;width:0;height:0}
-.slider{
-  position:absolute;inset:0;border-radius:999px;background:var(--accent);
-  transition:background .4s;
-}
+.slider{position:absolute;inset:0;border-radius:999px;background:var(--accent);transition:.4s}
 .slider::before{
   content:"";position:absolute;left:4px;top:4px;width:18px;height:18px;
-  border-radius:50%;background:#fff;transition:.4s;
+  border-radius:50%;background:#fff;transition:.4s
 }
 .switch input:checked + .slider::before{transform:translateX(24px)}
+.mode-light{opacity:1}[data-theme="dark"] .mode-light{opacity:0}
+.mode-dark{opacity:0}[data-theme="dark"] .mode-dark{opacity:1}
 
 /* ---------- GRID ---------- */
 main{max-width:1200px;margin:3rem auto 6rem;padding:0 1.4rem}
@@ -77,26 +72,34 @@ main{max-width:1200px;margin:3rem auto 6rem;padding:0 1.4rem}
 @media(max-width:900px){.grid{columns:280px 2}}
 @media(max-width:600px){.grid{columns:1 1}}
 
+/* uniform card spacing / appearance */
 section{
-  break-inside:avoid;margin:0 0 2rem;padding:1.8rem 1.6rem 1.2rem;
+  break-inside:avoid;margin:0 0 2rem;padding:1.9rem 1.6rem 1.25rem;
   background:var(--card);border:1px solid var(--card-brd);border-radius:22px;
   backdrop-filter:blur(24px);
   transform:translateY(60px) scale(.95);opacity:0;
   transition:background .35s,border-color .35s;
 }
+
+/* date line (h3) spacing */
+main h3{
+  font-size:1.15rem;font-weight:600;margin:0 0 2.2rem; /* extra bottom gap */
+}
+
+/* headings */
 h2{
-  font-size:1.3rem;margin-bottom:1.2rem;font-weight:700;
+  font-size:1.3rem;margin-bottom:1.25rem;font-weight:700;
   color:var(--heading);text-shadow:var(--halo);
   transition:color .35s,text-shadow .35s;
 }
+
 details{margin:1rem 0;border-left:3px solid var(--accent);padding-left:1rem}
 summary{
   cursor:pointer;list-style:none;font-weight:700;font-size:1.05rem;
-  line-height:1.45;color:var(--txt);position:relative;padding-right:1.6rem;
+  color:var(--txt);line-height:1.45;position:relative;padding-right:1.6rem
 }
 summary::after{
-  content:"›";position:absolute;right:0;top:0;font-size:1.25rem;
-  transition:.25s;filter:brightness(2)
+  content:"›";position:absolute;right:0;top:0;font-size:1.25rem;transition:.25s
 }
 details[open] summary::after{transform:rotate(90deg)}
 ul{padding-left:1.2rem;margin:.5rem 0}
@@ -116,11 +119,12 @@ footer{text-align:center;font-size:.8rem;margin:4rem 0;color:var(--txt);opacity:
     <div class="brand">Daily&nbsp;News&nbsp;Briefing</div>
 
     <div class="theme-toggle">
-      <span id="themeLabel" class="theme-label">Dark&nbsp;Mode</span>
+      <span id="themeLabel" class="theme-label mode-light">LM</span>
       <label class="switch">
         <input id="themeToggle" type="checkbox">
         <span class="slider"></span>
       </label>
+      <span class="theme-label mode-dark">DM</span>
     </div>
   </div>
 </nav>
@@ -130,30 +134,26 @@ footer{text-align:center;font-size:.8rem;margin:4rem 0;color:var(--txt);opacity:
 <footer>© 2025 News Digest — Sources as cited</footer>
 
 <script>
-/* ------------ EDIT THIS DAILY ------------ */
+/* ---------- DAILY UPDATE ---------- */
 const markdownUrl = "news/Daily%20News%202025-06-17.md";
-/* ----------------------------------------- */
+/* ---------------------------------- */
 
 const root   = document.documentElement;
 const toggle = document.getElementById('themeToggle');
-const label  = document.getElementById('themeLabel');
 
 /* initial theme */
-const saved  = localStorage.getItem('theme') || 'light';
-setTheme(saved);
+const saved = localStorage.getItem('theme') || 'light';
+applyTheme(saved);
 
-/* toggle handler */
+/* toggle click */
 toggle.addEventListener('change', () => {
   const mode = toggle.checked ? 'dark' : 'light';
-  setTheme(mode);
+  applyTheme(mode);
   localStorage.setItem('theme', mode);
 });
-
-/* helper */
-function setTheme(mode){
+function applyTheme(mode){
   root.dataset.theme = mode;
   toggle.checked = mode === 'dark';
-  label.textContent = mode === 'dark' ? 'Dark Mode' : 'Light Mode';
 }
 
 /* markdown → cards */
@@ -164,6 +164,7 @@ fetch(markdownUrl)
     const grid=document.getElementById('grid');
     grid.innerHTML = marked.parse(md);
 
+    /* H2 → section */
     let sec=null;
     [...grid.childNodes].forEach(n=>{
       if(n.nodeType!==1)return;
@@ -171,23 +172,24 @@ fetch(markdownUrl)
       sec&&sec.appendChild(n);
     });
 
+    /* headline group → details */
     grid.querySelectorAll('section').forEach(section=>{
-      const rest=[...section.childNodes].filter(x=>x!==section.querySelector('h2'));
+      const nodes=[...section.childNodes].filter(x=>x!==section.querySelector('h2'));
       let art=null;
-      rest.forEach(n=>{
+      nodes.forEach(n=>{
         if(n.querySelector&&n.querySelector('strong')){
           art=document.createElement('details');
           const s=document.createElement('summary');
           s.textContent=n.querySelector('strong').textContent;
-          art.appendChild(s);section.appendChild(art);
+          art.appendChild(s); section.appendChild(art);
         }
         art?.appendChild(n);
       });
     });
 
-    /* reveal anim */
-    const io=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
+    /* GSAP reveal */
+    const io=new IntersectionObserver(ent=>{
+      ent.forEach(e=>{
         if(e.isIntersecting){
           gsap.to(e.target,{y:0,scale:1,opacity:1,duration:.9,ease:'expo.out'});
           io.unobserve(e.target);
@@ -196,15 +198,13 @@ fetch(markdownUrl)
     },{threshold:.15});
     document.querySelectorAll('section').forEach(s=>io.observe(s));
 
-    /* accordion spring */
+    /* spring accordion */
     document.querySelectorAll('details').forEach(d=>{
       d.addEventListener('toggle',()=>{
-        const body=d.querySelector('summary').nextElementSibling;
-        if(!body)return;
-        const from=d.open?0:body.offsetHeight;
-        const to  =d.open?body.offsetHeight:0;
+        const b=d.querySelector('summary').nextElementSibling;if(!b)return;
+        const from=d.open?0:b.offsetHeight;const to=d.open?b.offsetHeight:0;
         popmotion.spring({from,to,stiffness:180,damping:22})
-          .start(v=>body.style.height=v+'px');
+          .start(v=>b.style.height=v+'px');
       });
     });
   })
