@@ -5,163 +5,129 @@
   <title>Daily News Briefing</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- iOS-style system fonts + Orbitron for tiny accent -->
+  <!-- Font stack -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
   <style>
   :root{
-    /* light-mode */
-    --bg-start:#f6f7fb;
-    --bg-end:#dee3f1;
-    --card-bg:rgba(255,255,255,.55);
-    --card-border:rgba(255,255,255,.4);
-    --text:#111;
-    --accent:#0a84ff;            /* iOS blue */
+    /* light */
+    --bg-start:#f6f7fb;  --bg-end:#dee3f1;
+    --card-bg:rgba(255,255,255,.55); --card-border:rgba(255,255,255,.4);
+    --text:#111;         --accent:#0a84ff;
+    --header-glass:rgba(255,255,255,.75);   /* NEW – soft white glass */
+    --header-text:#0b2f61;                  /* NEW – dark-blue label */
   }
   @media (prefers-color-scheme: dark){
     :root{
-      --bg-start:#0e0f1a;
-      --bg-end:#1a1c29;
-      --card-bg:rgba(255,255,255,.07);
-      --card-border:rgba(255,255,255,.15);
-      --text:#e5e7eb;
-      --accent:#0a84ff;
+      --bg-start:#0e0f1a; --bg-end:#1a1c29;
+      --card-bg:rgba(255,255,255,.07); --card-border:rgba(255,255,255,.15);
+      --text:#e5e7eb;     --accent:#0a84ff;
+      --header-glass:rgba(255,255,255,.12);
+      --header-text:#93c5fd;
     }
   }
 
-  /* ------------ LAYOUT ------------ */
+  /* --- Global layout --- */
   *{box-sizing:border-box;margin:0}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
-    background:linear-gradient(135deg,var(--bg-start) 0%,var(--bg-end) 100%) fixed;
+    background:linear-gradient(135deg,var(--bg-start),var(--bg-end)) fixed;
     color:var(--text);
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
+    min-height:100vh; display:flex;flex-direction:column;
   }
 
-  /* Frosted top bar */
+  /* --- Glassy header --- */
   header{
     backdrop-filter:blur(16px);
     -webkit-backdrop-filter:blur(16px);
-    background:rgba(255,255,255,.4);
-    border-bottom:1px solid rgba(255,255,255,.35);
+    background:var(--header-glass);
+    border-bottom:1px solid rgba(0,0,0,.05);
     position:sticky;top:0;
   }
   nav{
     max-width:960px;margin:0 auto;
-    padding:.9rem 1.2rem;
-    font-weight:600;
+    padding:.9rem 1.3rem;
+    font-weight:700;
+    font-size:clamp(1.2rem,3vw,1.8rem);
     letter-spacing:.03em;
-    font-size:clamp(1.2rem,3vw,1.7rem);
+    color:var(--header-text);
   }
-  nav span{font-family:Orbitron,monospace;margin-left:.15em;color:var(--accent)}
+  nav span{
+    font-family:Orbitron,monospace;
+    margin-left:.15em; color:var(--accent);
+  }
 
   main{
-    max-width:960px;
-    margin:2.4rem auto 0;
-    padding:0 1rem 4rem;
-    display:grid;
-    gap:2.4rem;
-    flex:1 0 auto;
+    max-width:960px; margin:2.4rem auto 0;
+    padding:0 1rem 4rem; display:grid; gap:2.4rem; flex:1 0 auto;
   }
 
-  /* Glass cards */
   section{
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
-    background:var(--card-bg);
-    border:1px solid var(--card-border);
-    border-radius:24px;
-    padding:1.6rem 1.4rem 1.1rem;
+    backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+    background:var(--card-bg); border:1px solid var(--card-border);
+    border-radius:24px; padding:1.6rem 1.4rem 1.1rem;
     transition:transform .3s ease,box-shadow .3s ease;
   }
   @media (hover:hover){
-    section:hover{transform:translateY(-6px);box-shadow:0 16px 32px rgba(0,0,0,.13)}
+    section:hover{transform:translateY(-6px);box-shadow:0 16px 32px rgba(0,0,0,.12)}
   }
 
-  h2{
-    font-size:1.25rem;
-    margin-bottom:1.1rem;
-    font-weight:600;
-    color:var(--accent);
-  }
+  h2{font-size:1.25rem;margin-bottom:1.1rem;font-weight:600;color:var(--accent)}
 
-  /* Articles */
   details{
-    margin:.9rem 0;
-    border-left:2px solid var(--accent);
-    padding-left:.8rem;
+    margin:.9rem 0; border-left:2px solid var(--accent); padding-left:.8rem;
   }
   summary{
-    cursor:pointer;
-    list-style:none;
-    font-weight:600;
-    position:relative;
-    padding-right:1.4rem;
+    cursor:pointer; list-style:none; font-weight:600;
+    position:relative; padding-right:1.4rem;
   }
   summary::after{
-    content:"›";
-    position:absolute;right:0;top:0;
-    transition:transform .25s;
+    content:"›"; position:absolute;right:0;top:0;transition:transform .25s;
   }
   details[open] summary::after{transform:rotate(90deg)}
-  details p,details ul{margin:.45rem 0}
-  ul{padding-left:1rem}
+  ul{padding-left:1rem;margin:.45rem 0}
 
   footer{
-    text-align:center;
-    font-size:.8rem;
-    padding:2rem 0 1.5rem;
-    color:var(--text);
-    opacity:.55;
+    text-align:center;font-size:.8rem;padding:2rem 0 1.5rem;
+    color:var(--text);opacity:.55;
   }
 
-  /* Subtle desktop scrollbar */
   @media (min-width:800px){
     ::-webkit-scrollbar{width:10px}
-    ::-webkit-scrollbar-track{background:transparent}
-    ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:6px;opacity:.7}
+    ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:6px}
   }
   </style>
 </head>
 
 <body>
   <header>
-    <nav>Daily News<span>•</span>Briefing</nav>
+    <nav>Daily News <span>•</span> Briefing</nav>
   </header>
 
-  <main id="news"><!-- JS injects parsed markdown here --></main>
+  <main id="news"></main>
 
   <footer>© 2025 News Digest — Sources as cited</footer>
 
-  <!-- --------------- JS --------------- -->
+  <!-- ---------- JS ---------- -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-  /*   CHANGE DATE EACH DAY   */
+  /* update this each day */
   const markdownUrl = "news/Daily%20News%202025-06-17.md";
-  /* ----------------------- */
 
   fetch(markdownUrl)
     .then(r=>r.ok?r.text():Promise.reject("File not found ("+r.status+")"))
     .then(raw=>{
-      // bullet normalisation
-      const md = raw.replace(/^• /gm,"- ");
+      const md=raw.replace(/^• /gm,"- ");
       const root=document.getElementById("news");
-      root.innerHTML = marked.parse(md);
+      root.innerHTML=marked.parse(md);
 
-      /* --- wrap into <section> --- */
       let sec=null;
       [...root.childNodes].forEach(n=>{
-        if(n.nodeType!==1) return;            // skip non-element nodes
-        if(n.tagName==="H2"){
-          sec=document.createElement("section");
-          n.before(sec);
-        }
-        if(sec){sec.appendChild(n);}
+        if(n.nodeType!==1)return;
+        if(n.tagName==="H2"){sec=document.createElement("section");n.before(sec);}
+        if(sec)sec.appendChild(n);
       });
 
-      /* --- convert headlines to <details> --- */
       root.querySelectorAll("section").forEach(section=>{
         const bits=[...section.childNodes].filter(x=>x!==section.querySelector("h2"));
         let art=null;
@@ -170,15 +136,14 @@
             art=document.createElement("details");
             const sum=document.createElement("summary");
             sum.textContent=n.querySelector("strong").textContent;
-            art.appendChild(sum);
-            section.appendChild(art);
+            art.appendChild(sum); section.appendChild(art);
           }
           art?.appendChild(n);
         });
       });
     })
     .catch(e=>{
-      document.getElementById("news").innerHTML =
+      document.getElementById("news").innerHTML=
         `<p style="color:#ff453a;font-weight:600">Could not load the news file.<br>${e}</p>`;
     });
   </script>
