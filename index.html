@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <title>Daily News • Dual-Theme</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.4/dist/gsap.min.js"></script>
@@ -15,56 +13,48 @@
 /* ---------- THEME TOKENS ---------- */
 :root{
   --accent:#4d9bff;
-  --bg:#fafafa;           --txt:#111;
+  --bg:#fafafa;              --txt:#111;
   --glass:rgba(255,255,255,.75);
   --card:rgba(255,255,255,.55); --card-brd:rgba(0,0,0,.12);
-  --heading:#000;         --halo:0 0 8px rgba(77,155,255,.35);
+  --heading:#000;            --halo:0 0 8px rgba(77,155,255,.35);
 }
 [data-theme="dark"]{
-  --bg:#000;              --txt:#f4f4f4;
+  --bg:#000;                 --txt:#f4f4f4;
   --glass:rgba(16,16,16,.6);
-  --card:rgba(20,20,20,.9);--card-brd:rgba(255,255,255,.12);
-  --heading:#fff;         --halo:0 0 10px rgba(77,155,255,.45);
+  --card:rgba(20,20,20,.9);   --card-brd:rgba(255,255,255,.12);
+  --heading:#fff;            --halo:0 0 10px rgba(77,155,255,.45);
 }
 
 /* ---------- RESET ---------- */
-*,*:before,*:after{box-sizing:border-box;margin:0}
-html,body{height:100%}
+*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
 body{
-  font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
-  background:var(--bg); color:var(--txt);
-  transition:background .35s,color .35s; overflow-x:hidden;
+  min-height:100%;font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,
+  "Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  background:var(--bg);color:var(--txt);transition:background .35s,color .35s;
+  overflow-x:hidden;
 }
 
-/* ---------- NAVBAR ---------- */
-nav{
-  position:sticky;top:0;z-index:100;
-  backdrop-filter:blur(18px);background:var(--glass);
-  border-bottom:1px solid var(--card-brd);transition:background .35s;
-}
-nav .wrap{
-  max-width:1200px;margin:0 auto;padding:1rem 1.6rem;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.brand{
-  font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;
-  color:var(--heading);-webkit-text-stroke:.5px var(--accent);
-  text-shadow:var(--halo);transition:color .35s,text-shadow .35s;
-}
+/* ---------- NAV ---------- */
+nav{position:sticky;top:0;z-index:100;background:var(--glass);
+     backdrop-filter:blur(18px);border-bottom:1px solid var(--card-brd);
+     transition:background .35s}
+nav .wrap{max-width:1200px;margin:auto;padding:1rem 1.6rem;
+          display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;
+       color:var(--heading);-webkit-text-stroke:.5px var(--accent);
+       text-shadow:var(--halo);transition:color .35s,text-shadow .35s}
 
-/* ---------- THEME TOGGLE ---------- */
-.theme-toggle{display:flex;align-items:center;gap:.55rem;min-width:120px}
-.theme-label{font-size:.9rem;font-weight:600;white-space:nowrap}
+/* ---------- THEME SWITCH ---------- */
+.theme-toggle{display:flex;align-items:center;gap:.55rem}
 .switch{position:relative;width:52px;height:26px;flex-shrink:0}
 .switch input{opacity:0;width:0;height:0}
 .slider{position:absolute;inset:0;border-radius:999px;background:var(--accent);transition:.4s}
-.slider::before{
-  content:"";position:absolute;left:4px;top:4px;width:18px;height:18px;
-  border-radius:50%;background:#fff;transition:.4s
-}
+.slider::before{content:"";position:absolute;width:18px;height:18px;top:4px;left:4px;
+                border-radius:50%;background:#fff;transition:.4s}
 .switch input:checked + .slider::before{transform:translateX(24px)}
-.mode-light{opacity:1}[data-theme="dark"] .mode-light{opacity:0}
-.mode-dark{opacity:0}[data-theme="dark"] .mode-dark{opacity:1}
+.theme-label{font-weight:600;font-size:.9rem;min-width:2.4rem;text-align:center;
+             transition:opacity .3s}
+[data-theme="light"] .label-dark{opacity:0}[data-theme="dark"] .label-light{opacity:0}
 
 /* ---------- GRID ---------- */
 main{max-width:1200px;margin:3rem auto 6rem;padding:0 1.4rem}
@@ -72,40 +62,33 @@ main{max-width:1200px;margin:3rem auto 6rem;padding:0 1.4rem}
 @media(max-width:900px){.grid{columns:280px 2}}
 @media(max-width:600px){.grid{columns:1 1}}
 
-/* uniform card spacing / appearance */
+main h3{font-size:1.15rem;font-weight:600;margin:0 0 2.4rem}
+
 section{
   break-inside:avoid;margin:0 0 2rem;padding:1.9rem 1.6rem 1.25rem;
   background:var(--card);border:1px solid var(--card-brd);border-radius:22px;
-  backdrop-filter:blur(24px);
-  transform:translateY(60px) scale(.95);opacity:0;
-  transition:background .35s,border-color .35s;
+  backdrop-filter:blur(24px);transition:background .35s,border-color .35s;
+  transform:translateY(30px) scale(.97);opacity:0;will-change:transform,opacity
 }
-
-/* date line (h3) spacing */
-main h3{
-  font-size:1.15rem;font-weight:600;margin:0 0 2.2rem; /* extra bottom gap */
-}
-
-/* headings */
-h2{
-  font-size:1.3rem;margin-bottom:1.25rem;font-weight:700;
-  color:var(--heading);text-shadow:var(--halo);
-  transition:color .35s,text-shadow .35s;
-}
+h2{font-size:1.3rem;margin-bottom:1.25rem;font-weight:700;
+    color:var(--heading);text-shadow:var(--halo);transition:color .35s}
 
 details{margin:1rem 0;border-left:3px solid var(--accent);padding-left:1rem}
-summary{
-  cursor:pointer;list-style:none;font-weight:700;font-size:1.05rem;
-  color:var(--txt);line-height:1.45;position:relative;padding-right:1.6rem
-}
-summary::after{
-  content:"›";position:absolute;right:0;top:0;font-size:1.25rem;transition:.25s
-}
+summary{cursor:pointer;list-style:none;font-weight:700;font-size:1.05rem;
+        line-height:1.45;color:var(--txt);position:relative;padding-right:1.6rem}
+summary::after{content:"›";position:absolute;right:0;top:0;font-size:1.25rem;
+               transition:.25s}
 details[open] summary::after{transform:rotate(90deg)}
 ul{padding-left:1.2rem;margin:.5rem 0}
 
+@media(hover:hover){
+  section{transition:transform .35s cubic-bezier(.25,.8,.25,1),box-shadow .35s}
+  section:hover{transform:translateY(-6px) scale(1.01);
+                box-shadow:0 22px 44px rgba(0,0,0,.28)}
+}
+
 /* ---------- FOOT ---------- */
-footer{text-align:center;font-size:.8rem;margin:4rem 0;color:var(--txt);opacity:.65}
+footer{font-size:.8rem;text-align:center;margin:4rem 0;color:var(--txt);opacity:.65}
 @media(min-width:800px){
   ::-webkit-scrollbar{width:10px}
   ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:6px}
@@ -119,12 +102,12 @@ footer{text-align:center;font-size:.8rem;margin:4rem 0;color:var(--txt);opacity:
     <div class="brand">Daily&nbsp;News&nbsp;Briefing</div>
 
     <div class="theme-toggle">
-      <span id="themeLabel" class="theme-label mode-light">LM</span>
       <label class="switch">
         <input id="themeToggle" type="checkbox">
         <span class="slider"></span>
       </label>
-      <span class="theme-label mode-dark">DM</span>
+      <span id="themeLabel" class="theme-label label-light">LM</span>
+      <span class="theme-label label-dark">DM</span>
     </div>
   </div>
 </nav>
@@ -140,39 +123,40 @@ const markdownUrl = "news/Daily%20News%202025-06-17.md";
 
 const root   = document.documentElement;
 const toggle = document.getElementById('themeToggle');
+const label  = document.getElementById('themeLabel');
 
-/* initial theme */
-const saved = localStorage.getItem('theme') || 'light';
-applyTheme(saved);
+initTheme();
 
-/* toggle click */
+/* ---------------- THEME ---------------- */
+function initTheme(){
+  const saved = localStorage.getItem('theme') || 'light';
+  applyTheme(saved);
+}
 toggle.addEventListener('change', () => {
   const mode = toggle.checked ? 'dark' : 'light';
-  applyTheme(mode);
-  localStorage.setItem('theme', mode);
+  applyTheme(mode); localStorage.setItem('theme',mode);
 });
-function applyTheme(mode){
-  root.dataset.theme = mode;
-  toggle.checked = mode === 'dark';
+function applyTheme(m){
+  root.dataset.theme = m; toggle.checked = m==='dark';
+  label.textContent  = m==='dark'?'DM':'LM';
 }
 
-/* markdown → cards */
+/* --------- BUILD CONTENT --------- */
 fetch(markdownUrl)
   .then(r=>r.ok?r.text():Promise.reject(r.status))
   .then(raw=>{
-    const md = raw.replace(/^• /gm,"- ");
     const grid=document.getElementById('grid');
-    grid.innerHTML = marked.parse(md);
+    grid.innerHTML = marked.parse(raw.replace(/^• /gm,"- "));
 
-    /* H2 → section */
+    /* grouping */
     let sec=null;
     [...grid.childNodes].forEach(n=>{
-      if(n.nodeType!==1)return;
+      if(n.nodeType!==1) return;
       if(n.tagName==='H2'){sec=document.createElement('section');n.before(sec);}
       sec&&sec.appendChild(n);
     });
 
-    /* headline group → details */
+    /* headline to accordion */
     grid.querySelectorAll('section').forEach(section=>{
       const nodes=[...section.childNodes].filter(x=>x!==section.querySelector('h2'));
       let art=null;
@@ -181,18 +165,18 @@ fetch(markdownUrl)
           art=document.createElement('details');
           const s=document.createElement('summary');
           s.textContent=n.querySelector('strong').textContent;
-          art.appendChild(s); section.appendChild(art);
+          art.appendChild(s);section.appendChild(art);
         }
         art?.appendChild(n);
       });
     });
 
     /* GSAP reveal */
-    const io=new IntersectionObserver(ent=>{
-      ent.forEach(e=>{
-        if(e.isIntersecting){
-          gsap.to(e.target,{y:0,scale:1,opacity:1,duration:.9,ease:'expo.out'});
-          io.unobserve(e.target);
+    const io=new IntersectionObserver(e=>{
+      e.forEach(t=>{
+        if(t.isIntersecting){
+          gsap.to(t.target,{y:0,scale:1,opacity:1,duration:.6,ease:'power1.out'});
+          io.unobserve(t.target);
         }
       });
     },{threshold:.15});
@@ -201,17 +185,15 @@ fetch(markdownUrl)
     /* spring accordion */
     document.querySelectorAll('details').forEach(d=>{
       d.addEventListener('toggle',()=>{
-        const b=d.querySelector('summary').nextElementSibling;if(!b)return;
-        const from=d.open?0:b.offsetHeight;const to=d.open?b.offsetHeight:0;
-        popmotion.spring({from,to,stiffness:180,damping:22})
-          .start(v=>b.style.height=v+'px');
+        const body=d.querySelector('summary').nextElementSibling;if(!body)return;
+        const from=d.open?0:body.offsetHeight,to=d.open?body.offsetHeight:0;
+        popmotion.spring({from,to,stiffness:200,damping:24})
+          .start(v=>body.style.height=v+'px');
       });
     });
   })
-  .catch(e=>{
-    document.getElementById('grid').innerHTML=
-      `<p style="color:#ff4757;font-weight:700">Could not load news<br>${e}</p>`;
-  });
+  .catch(e=>document.getElementById('grid').innerHTML=
+      `<p style="color:#f55;font-weight:700">Couldn’t load news (${e})</p>`);
 </script>
 </body>
 </html>
