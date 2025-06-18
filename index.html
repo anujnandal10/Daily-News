@@ -15,19 +15,19 @@
 /************  THEME  ************/
 :root{
   --accent0:#5ea5ff;
-  --accent1:#9a55ff;
-  --txt-light:#fafafa;
-  --txt-dark:#111;
+  --accent1:#b46cff;
+  --txt:#e5e7eb;                  /* NEW – default text is light */
   --card-bg:rgba(255,255,255,.08);
   --card-brd:rgba(255,255,255,.22);
-  --navbar-glass:rgba(255,255,255,.65);
+  --navbar-glass:rgba(255,255,255,.75);
   --neon:linear-gradient(90deg,var(--accent0),var(--accent1));
 }
-@media (prefers-color-scheme:dark){
+@media (prefers-color-scheme:light){
   :root{
-    --card-bg:rgba(255,255,255,.06);
-    --card-brd:rgba(255,255,255,.15);
-    --navbar-glass:rgba(30,30,30,.55);
+    --txt:#1a1a1a;
+    --navbar-glass:rgba(255,255,255,.65);
+    --card-bg:rgba(255,255,255,.55);
+    --card-brd:rgba(0,0,0,.12);
   }
 }
 
@@ -36,15 +36,13 @@
 html,body{height:100%}
 body{
   font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
-  color:var(--txt-dark);
+  color:var(--txt);
   background:#0d0f23;
   overflow-x:hidden;
 }
 
 /************  HERO BACKDROP  ************/
-.bg-wrap{
-  position:fixed;inset:0;overflow:hidden;z-index:-2;
-}
+.bg-wrap{position:fixed;inset:0;overflow:hidden;z-index:-2}
 .plasma{
   position:absolute;width:120vw;height:120vw;top:-60vw;left:-10vw;
   background:radial-gradient(circle at 30% 30%,var(--accent1) 0%,transparent 60%),
@@ -55,8 +53,8 @@ body{
 }
 @keyframes spin{to{transform:rotate(360deg)}}
 .stars{
-  position:absolute;inset:0;background:url("data:image/svg+xml,\
-    %3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23ffffff'/%3E%3C/svg%3E") repeat;
+  position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23ffffff'/%3E%3C/svg%3E") repeat;
   animation:scroll-y 60s linear infinite;
   opacity:.12;
 }
@@ -67,85 +65,105 @@ nav{
   position:sticky;top:0;z-index:999;
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   background:var(--navbar-glass);
-  border-bottom:1px solid rgba(255,255,255,.18);
+  border-bottom:1px solid rgba(0,0,0,.05);
 }
 nav .inner{
   max-width:1100px;margin:0 auto;padding:1rem 1.4rem;
-  font-size:clamp(1.3rem,4vw,2rem);font-weight:600;
-  letter-spacing:.035em;color:var(--txt-dark);
-  position:relative;
+  font-size:clamp(1.4rem,4vw,2.2rem);font-weight:700;
+  letter-spacing:.03em;
+  display:flex;align-items:center;gap:.25em;
 }
-nav .inner::after{
-  content:"";position:absolute;left:0;bottom:-2px;width:100%;height:3px;
-  background:var(--neon);filter:blur(6px);opacity:.7;
-  animation:pulse 6s ease-in-out infinite;
+.brand{
+  background:var(--neon);
+  background-size:200% 200%;
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  animation:grad-shift 8s ease-in-out infinite;
+  text-shadow:0 0 6px rgba(0,0,0,.25),0 0 12px var(--accent0);
 }
-@keyframes pulse{0%,100%{opacity:.6}50%{opacity:.15}}
-.brand-accent{font-family:Orbitron,sans-serif;color:var(--accent0)}
+nav .dot{
+  font-family:Orbitron,sans-serif;
+  color:var(--accent0);
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+@keyframes grad-shift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.45}}
+nav .glow-bar{
+  position:absolute;left:0;bottom:-2px;width:100%;height:3px;
+  background:var(--neon);filter:blur(6px);opacity:.55;
+}
 
 /************  LAYOUT  ************/
 main{max-width:1100px;margin:2.8rem auto 4rem;padding:0 1.4rem}
-.grid{
-  columns:300px 3; column-gap:1.8rem;
-}
+.grid{columns:300px 3;column-gap:1.8rem}
 section{
-  break-inside:avoid; margin:0 0 1.8rem;
-  background:var(--card-bg); border:1px solid var(--card-brd);
+  break-inside:avoid;margin:0 0 1.8rem;
+  background:var(--card-bg);border:1px solid var(--card-brd);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-radius:22px; padding:1.5rem 1.4rem 1rem;
+  border-radius:22px;padding:1.5rem 1.4rem 1rem;
   transform:translateY(40px);opacity:0;
 }
 h2{font-size:1.2rem;margin-bottom:1rem;color:var(--accent0);font-weight:600}
 details{margin:.8rem 0;border-left:2px solid var(--accent0);padding-left:.9rem}
-summary{cursor:pointer;list-style:none;font-weight:600;position:relative;padding-right:1.4rem}
-summary::after{content:"›";position:absolute;right:0;top:0;transition:.25s}
+summary{
+  cursor:pointer;list-style:none;font-weight:600;
+  position:relative;padding-right:1.4rem;color:var(--txt)
+}
+summary::after{content:"›";position:absolute;right:0;top:0;transition:.25s;filter:brightness(1.4)}
 details[open] summary::after{transform:rotate(90deg)}
 ul{padding-left:1rem;margin:.4rem 0}
+section,summary,ul,li,p{line-height:1.48}
 
-/* 3-D tilt on hover (desktop) */
+/* 3-D tilt on hover */
 @media (hover:hover){
   section{transition:transform .3s ease,box-shadow .3s ease}
-  section:hover{transform:rotateX(1deg) rotateY(-4deg) translateY(-6px) scale(1.02);
+  section:hover{transform:rotateX(.8deg) rotateY(-3deg) translateY(-6px) scale(1.015);
                 box-shadow:0 14px 32px rgba(0,0,0,.25)}
 }
 
 /************  FOOTER  ************/
-footer{text-align:center;font-size:.75rem;margin:3rem 0;color:var(--txt-light);opacity:.6}
+footer{text-align:center;font-size:.75rem;margin:3rem 0;color:var(--txt);opacity:.6}
+
+/* minimal scrollbar */
+@media (min-width:800px){
+  ::-webkit-scrollbar{width:10px}
+  ::-webkit-scrollbar-thumb{background:var(--accent0);border-radius:6px}
+}
 </style>
 </head>
 <body>
 
-<div class="bg-wrap">
-  <div class="plasma"></div>
-  <div class="stars"></div>
-</div>
+<div class="bg-wrap"><div class="plasma"></div><div class="stars"></div></div>
 
-<nav><div class="inner">Daily News<span class="brand-accent">•</span>Briefing</div></nav>
+<nav>
+  <div class="inner">
+    <span class="brand">Daily&nbsp;News&nbsp;Briefing</span>
+    <span class="dot">◊</span>
+    <div class="glow-bar"></div>
+  </div>
+</nav>
 
 <main><div id="grid" class="grid"></div></main>
 
 <footer>© 2025 News Digest — Sources as cited</footer>
 
 <script>
-/*  ↓  UPDATE THIS LINE EACH DAY  ↓  */
+/*  ↓  EDIT THIS ONE LINE EACH DAY  ↓  */
 const markdownUrl = "news/Daily%20News%202025-06-17.md";
-/* ---------------------------------- */
+/* ------------------------------------ */
 
 fetch(markdownUrl)
   .then(r=>r.ok?r.text():Promise.reject("File not found ("+r.status+")"))
   .then(raw=>{
-    const md = raw.replace(/^• /gm,"- ");
-    const html = marked.parse(md);
-    const grid = document.getElementById("grid");
-    grid.innerHTML = html;
+    const md=raw.replace(/^• /gm,"- ");
+    const grid=document.getElementById("grid");
+    grid.innerHTML=marked.parse(md);
 
-    /* group by H2 → section */
+    /* H2 → section */
     let sec=null;
-    Array.from(grid.childNodes).forEach(n=>{
-      if(n.nodeType!==1) return;
-      if(n.tagName==="H2"){
-        sec=document.createElement("section"); n.before(sec);
-      }
+    [...grid.childNodes].forEach(n=>{
+      if(n.nodeType!==1)return;
+      if(n.tagName==="H2"){sec=document.createElement("section");n.before(sec);}
       sec&&sec.appendChild(n);
     });
 
@@ -154,17 +172,17 @@ fetch(markdownUrl)
       const bits=[...section.childNodes].filter(x=>x!==section.querySelector("h2"));
       let art=null;
       bits.forEach(n=>{
-        if(n.querySelector && n.querySelector("strong")){
+        if(n.querySelector&&n.querySelector("strong")){
           art=document.createElement("details");
           const sum=document.createElement("summary");
           sum.textContent=n.querySelector("strong").textContent;
-          art.appendChild(sum); section.appendChild(art);
+          art.appendChild(sum);section.appendChild(art);
         }
         art?.appendChild(n);
       });
     });
 
-    /* SCROLL-REVEAL */
+    /* scroll-reveal */
     const io=new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
@@ -175,15 +193,15 @@ fetch(markdownUrl)
     },{threshold:.15});
     document.querySelectorAll("section").forEach(s=>io.observe(s));
 
-    /* SPRING OPEN/CLOSE */
+    /* springy accordion */
     document.querySelectorAll("details").forEach(det=>{
       det.addEventListener("toggle",()=>{
-        const content=det.querySelector("summary").nextElementSibling;
-        if(!content) return;
-        const from=det.open?0:content.offsetHeight;
-        const to  =det.open?content.offsetHeight:0;
-        const spring=popmotion.spring({from,to,stiffness:140,damping:18});
-        spring.start(v=>content.style.height=v+"px");
+        const body=det.querySelector("summary").nextElementSibling;
+        if(!body)return;
+        const from=det.open?0:body.offsetHeight;
+        const to  =det.open?body.offsetHeight:0;
+        popmotion.spring({from,to,stiffness:150,damping:20})
+          .start(v=>body.style.height=v+"px");
       });
     });
   })
