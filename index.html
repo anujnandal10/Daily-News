@@ -2,165 +2,184 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Daily News Briefing — 2100 Edition</title>
+  <title>Daily News Briefing</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- Futuristic typefaces -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- iOS-style system fonts + Orbitron for tiny accent -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
   <style>
-  /* -------- SPACE-AGE THEME -------- */
   :root{
-    --mast-red:#8d1717;
-    --glass-bg:rgba(255,255,255,.06);
-    --glass-border:rgba(255,255,255,.18);
-    --neon:#00FFFF;
+    /* light-mode */
+    --bg-start:#f6f7fb;
+    --bg-end:#dee3f1;
+    --card-bg:rgba(255,255,255,.55);
+    --card-border:rgba(255,255,255,.4);
+    --text:#111;
+    --accent:#0a84ff;            /* iOS blue */
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg-start:#0e0f1a;
+      --bg-end:#1a1c29;
+      --card-bg:rgba(255,255,255,.07);
+      --card-border:rgba(255,255,255,.15);
+      --text:#e5e7eb;
+      --accent:#0a84ff;
+    }
   }
 
-  /* starfield gradient */
+  /* ------------ LAYOUT ------------ */
+  *{box-sizing:border-box;margin:0}
   body{
-    margin:0;
-    font-family:Inter,system-ui,sans-serif;
-    color:#e5e7eb;
-    background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+    background:linear-gradient(135deg,var(--bg-start) 0%,var(--bg-end) 100%) fixed;
+    color:var(--text);
     min-height:100vh;
     display:flex;
     flex-direction:column;
   }
 
-  /* glowing mast-head */
+  /* Frosted top bar */
   header{
-    font-family:Orbitron,Inter,sans-serif;
-    font-size:clamp(1.4rem,4vw,2.4rem);
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    background:var(--mast-red);
-    color:#fff;
-    padding:1rem 1.5rem;
-    box-shadow:0 0 6px #000 inset;
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    background:rgba(255,255,255,.4);
+    border-bottom:1px solid rgba(255,255,255,.35);
+    position:sticky;top:0;
   }
+  nav{
+    max-width:960px;margin:0 auto;
+    padding:.9rem 1.2rem;
+    font-weight:600;
+    letter-spacing:.03em;
+    font-size:clamp(1.2rem,3vw,1.7rem);
+  }
+  nav span{font-family:Orbitron,monospace;margin-left:.15em;color:var(--accent)}
 
   main{
-    width:min(92ch,90%);
-    margin:2.5rem auto 0;
-    flex:1 0 auto;
+    max-width:960px;
+    margin:2.4rem auto 0;
+    padding:0 1rem 4rem;
     display:grid;
-    gap:2.5rem;
+    gap:2.4rem;
+    flex:1 0 auto;
   }
 
-  /* glassy category panels */
+  /* Glass cards */
   section{
-    padding:1.6rem 1.3rem 1rem;
-    border:1px solid var(--glass-border);
-    background:var(--glass-bg);
-    backdrop-filter:blur(12px);
-    border-radius:18px;
-    box-shadow:0 8px 26px rgba(0,0,0,.25);
-    animation:fadeIn .7s ease both;
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:24px;
+    padding:1.6rem 1.4rem 1.1rem;
+    transition:transform .3s ease,box-shadow .3s ease;
   }
-  @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}}
+  @media (hover:hover){
+    section:hover{transform:translateY(-6px);box-shadow:0 16px 32px rgba(0,0,0,.13)}
+  }
 
   h2{
-    margin:.2rem 0 1.2rem;
-    font-family:Orbitron,Inter,sans-serif;
-    font-size:1.3rem;
-    color:var(--neon);
-    text-shadow:0 0 6px var(--neon);
+    font-size:1.25rem;
+    margin-bottom:1.1rem;
+    font-weight:600;
+    color:var(--accent);
   }
 
-  /* collapsible articles */
+  /* Articles */
   details{
-    border-left:3px solid var(--neon);
-    margin-bottom:1.1rem;
-    padding-left:.9rem;
-    transition:border-color .3s;
+    margin:.9rem 0;
+    border-left:2px solid var(--accent);
+    padding-left:.8rem;
   }
-  details:hover{border-color:var(--mast-red)}
   summary{
-    list-style:none;
     cursor:pointer;
+    list-style:none;
     font-weight:600;
     position:relative;
     padding-right:1.4rem;
   }
   summary::after{
-    content:"▸";
-    position:absolute; right:0; top:0;
+    content:"›";
+    position:absolute;right:0;top:0;
     transition:transform .25s;
-    color:var(--neon);
   }
   details[open] summary::after{transform:rotate(90deg)}
-  details p,details ul{margin:.4rem 0}
+  details p,details ul{margin:.45rem 0}
   ul{padding-left:1rem}
 
   footer{
     text-align:center;
-    font-size:.75rem;
-    padding:2rem 0 1rem;
-    color:#9ca3af;
+    font-size:.8rem;
+    padding:2rem 0 1.5rem;
+    color:var(--text);
+    opacity:.55;
   }
 
-  /* nicer scrollbar on desktop */
+  /* Subtle desktop scrollbar */
   @media (min-width:800px){
     ::-webkit-scrollbar{width:10px}
-    ::-webkit-scrollbar-track{background:rgba(0,0,0,.3)}
-    ::-webkit-scrollbar-thumb{background:var(--neon);border-radius:6px}
+    ::-webkit-scrollbar-track{background:transparent}
+    ::-webkit-scrollbar-thumb{background:var(--accent);border-radius:6px;opacity:.7}
   }
   </style>
 </head>
 
 <body>
-  <header>Daily News Briefing</header>
+  <header>
+    <nav>Daily News<span>•</span>Briefing</nav>
+  </header>
 
   <main id="news"><!-- JS injects parsed markdown here --></main>
 
-  <footer>© 2025 News Digest · Sources as cited</footer>
+  <footer>© 2025 News Digest — Sources as cited</footer>
 
-  <!-- ---------- LOGIC ---------- -->
+  <!-- --------------- JS --------------- -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-  /*   UPDATE THIS PATH EACH MORNING   */
+  /*   CHANGE DATE EACH DAY   */
   const markdownUrl = "news/Daily%20News%202025-06-17.md";
-  /* -------------------------------- */
+  /* ----------------------- */
 
   fetch(markdownUrl)
-    .then(r => r.ok ? r.text() : Promise.reject("File not found (" + r.status + ")"))
-    .then(raw => {
-      /* normalise “• ” bullets to Markdown lists */
-      const md = raw.replace(/^• /gm, "- ");
-      const root = document.getElementById("news");
+    .then(r=>r.ok?r.text():Promise.reject("File not found ("+r.status+")"))
+    .then(raw=>{
+      // bullet normalisation
+      const md = raw.replace(/^• /gm,"- ");
+      const root=document.getElementById("news");
       root.innerHTML = marked.parse(md);
 
-      /* ========== STEP 1  wrap each category in <section> ========== */
-      let section = null;
-      [...root.childNodes].forEach(node=>{
-        if(node.nodeType !== 1) return;          // skip text/whitespace nodes
-        if(node.tagName === "H2"){
-          section = document.createElement("section");
-          node.before(section);
+      /* --- wrap into <section> --- */
+      let sec=null;
+      [...root.childNodes].forEach(n=>{
+        if(n.nodeType!==1) return;            // skip non-element nodes
+        if(n.tagName==="H2"){
+          sec=document.createElement("section");
+          n.before(sec);
         }
-        if(section){ section.appendChild(node); }
+        if(sec){sec.appendChild(n);}
       });
 
-      /* ========== STEP 2  convert bold-headline blocks to <details> ========== */
-      root.querySelectorAll("section").forEach(sec=>{
-        const bits=[...sec.childNodes].filter(n=>n!==sec.querySelector("h2"));
-        let art = null;
+      /* --- convert headlines to <details> --- */
+      root.querySelectorAll("section").forEach(section=>{
+        const bits=[...section.childNodes].filter(x=>x!==section.querySelector("h2"));
+        let art=null;
         bits.forEach(n=>{
-          if(n.querySelector && n.querySelector("strong")){
-            art = document.createElement("details");
+          if(n.querySelector&&n.querySelector("strong")){
+            art=document.createElement("details");
             const sum=document.createElement("summary");
-            sum.textContent = n.querySelector("strong").textContent;
+            sum.textContent=n.querySelector("strong").textContent;
             art.appendChild(sum);
-            sec.appendChild(art);
+            section.appendChild(art);
           }
           art?.appendChild(n);
         });
       });
     })
-    .catch(err=>{
+    .catch(e=>{
       document.getElementById("news").innerHTML =
-        `<p style="color:#ff6b6b;font-weight:600">Could not load the news file.<br>${err}</p>`;
+        `<p style="color:#ff453a;font-weight:600">Could not load the news file.<br>${e}</p>`;
     });
   </script>
 </body>
