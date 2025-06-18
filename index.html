@@ -2,116 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Daily News Briefing</title>
+  <title>Daily News Briefing — 2100 Edition</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- ====== FONTS & BASIC STYLES ====== -->
+  <!-- futuristic fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@300;700&display=swap");
+  /* -------- SPACE-AGE THEME -------- */
+  :root{
+    --hindu-red:#8d1717;
+    --glass-bg:rgba(255,255,255,.05);
+    --glass-border:rgba(255,255,255,.2);
+    --glow:#00ffff;
+  }
 
-    :root {
-      --red: #891400;     /* mast-head colour */
-      --text-dark: #111;
-      --text-light: #eee;
+  /* starfield gradient */
+  body{
+    margin:0;
+    font-family:Inter,system-ui,sans-serif;
+    color:#e5e7eb;
+    background:#0f0c29;
+    background:linear-gradient(135deg,#0f0c29 0%,#302b63 50%,#24243e 100%);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* glowing mast-head */
+  header{
+    font-family:Orbitron,Inter,sans-serif;
+    font-size:clamp(1.2rem,4vw,2.4rem);
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    background:var(--hindu-red);
+    color:#fff;
+    padding:1rem 1.5rem;
+    border-bottom:1px solid rgba(0,0,0,.4);
+    box-shadow:0 0 6px #000 inset;
+  }
+
+  main{
+    width:min(92ch,90%);
+    margin-inline:auto;
+    margin-top:2.5rem;
+    flex:1 0 auto;
+    display:grid;
+    gap:2.5rem;
+  }
+
+  /* glassy category cards */
+  section{
+    padding:1.5rem 1.3rem 1rem;
+    border:1px solid var(--glass-border);
+    background:var(--glass-bg);
+    backdrop-filter:blur(12px);
+    border-radius:18px;
+    box-shadow:0 8px 26px rgba(0,0,0,.25);
+    animation:fadeIn .7s ease both;
+  }
+  @keyframes fadeIn{from{opacity:0;transform:translateY(15px)}}
+
+  h2{
+    margin:.2rem 0 1.2rem;
+    font-family:Orbitron,Inter,sans-serif;
+    font-size:1.3rem;
+    color:var(--glow);
+    text-shadow:0 0 6px var(--glow);
+  }
+
+  /* collapsible headline */
+  details{
+    border-left:3px solid var(--glow);
+    margin-bottom:1.1rem;
+    padding-left:.9rem;
+    transition:border-color .3s;
+  }
+  details:hover{border-color:var(--hindu-red)}
+  summary{
+    list-style:none;
+    cursor:pointer;
+    font-weight:600;
+    position:relative;
+    padding-right:1.5rem;
+  }
+  summary::after{
+    content:"▶";
+    position:absolute;
+    right:0;
+    top:0;
+    transition:transform .25s;
+    font-size:.9rem;
+    color:var(--glow);
+  }
+  details[open] summary::after{transform:rotate(90deg)}
+  details p,details ul{margin:.4rem 0}
+  ul{padding-left:1rem}
+
+  footer{
+    text-align:center;
+    font-size:.75rem;
+    padding:2rem 0 1rem;
+    color:#9ca3af;
+  }
+
+  /* nicer scrollbar for big screens */
+  @media (min-width:800px){
+    ::-webkit-scrollbar{width:10px}
+    ::-webkit-scrollbar-track{background:rgba(0,0,0,.3)}
+    ::-webkit-scrollbar-thumb{
+      background:var(--glow);
+      border-radius:6px;
     }
-
-    body      { margin:0; font-family:Merriweather,serif; background:#fafafa; color:var(--text-dark); line-height:1.5; }
-    header    { background:var(--red); color:#fff; padding:1.2rem 1rem; }
-    header h1 { margin:0; font-size:2rem; letter-spacing:.5px; }
-
-    main      { max-width:920px; margin:2rem auto; padding:0 1rem; }
-    section   { margin-bottom:2.5rem; border-bottom:1px solid #ddd; }
-    section:last-child { border:none; }
-    h2        { font-size:1.4rem; margin:0 0 1rem; color:var(--red); }
-
-    footer    { font-size:.8rem; text-align:center; color:#666; margin:3rem 0 1rem; }
-
-    /* Collapsible article styling */
-    details            { border-left:4px solid var(--red); padding-left:.6rem; margin:.6rem 0 1rem; }
-    summary            { list-style:none; cursor:pointer; position:relative; font-weight:700; }
-    summary::after     { content:"▼"; font-size:.7rem; position:absolute; right:-1.2rem; top:.1rem; }
-    details[open] summary::after { content:"▲"; }
-    details p, details ul { margin:.4rem 0; }
-    ul { padding-left:1.2rem; }
-
-    /* Dark-mode */
-    @media (prefers-color-scheme: dark){
-      body   { background:#111; color:var(--text-light); }
-      header { background:#b31c1c; }
-      h2     { color:#b31c1c; }
-      section{ border-color:#444; }
-    }
+  }
   </style>
 </head>
 
 <body>
-  <header><h1>Daily News Briefing</h1></header>
+  <header>Daily News Briefing</header>
 
-  <main id="news"><!-- content injected by JS --></main>
+  <main id="news"><!-- JS injects parsed markdown here --></main>
 
   <footer>© 2025 News Digest · Sources as cited</footer>
 
-  <!-- ====== SCRIPT: fetch markdown & render ====== -->
+  <!-- ------------- JS ------------- -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    /* === EDIT THIS PATH EVERY DAY === */
-    const markdownUrl = "news/Daily%20News%202025-06-17.md";
-    /* ================================= */
+  /* update this path each morning */
+  const markdownUrl = "news/Daily%20News%202025-06-17.md";
 
-    /* helper: replace any "• " with "- " before parsing
-       so lists render as proper bullet <ul> items */
-    function normaliseBullets(mdText){
-      return mdText.replace(/^• /gm, "- ");
-    }
+  fetch(markdownUrl)
+    .then(r=> r.ok ? r.text():Promise.reject("File not found ("+r.status+")"))
+    .then(txt=>{
+      // normalise "•" → "- " so lists render
+      const md = txt.replace(/^• /gm,"- ");
+      document.getElementById("news").innerHTML = marked.parse(md);
 
-    /* 1) fetch .md  2) convert to HTML  3) restructure into sections  4) wrap articles */
-    fetch(markdownUrl)
-      .then(r => r.ok ? r.text() : Promise.reject("File not found ("+r.status+")"))
-      .then(mdRaw => {
-        const md = normaliseBullets(mdRaw);
-        const html = marked.parse(md);
-        const container = document.getElementById("news");
-        container.innerHTML = html;
-
-        /* 3a ► wrap each H2 and following siblings into <section> */
-        const nodes = Array.from(container.childNodes);
-        let currentSection = null;
-        nodes.forEach(node=>{
-          if(node.nodeName === "H2"){
-            currentSection = document.createElement("section");
-            node.before(currentSection);
-          }
-          currentSection?.appendChild(node);
-        });
-
-        /* 4 ► turn each article block inside a section into <details> */
-        container.querySelectorAll("section").forEach(section=>{
-          // split by <strong> headline
-          const parts = Array.from(section.childNodes).filter(n => n !== section.querySelector("h2"));
-          let article = null;
-          parts.forEach(n=>{
-            if(n.querySelector && n.querySelector("strong")){
-              article = document.createElement("article");
-              section.appendChild(article);
-            }
-            article?.appendChild(n);
-          });
-
-          section.querySelectorAll("article").forEach(art=>{
-            const det = document.createElement("details");
-            const sum = document.createElement("summary");
-            const head = art.querySelector("strong");
-            sum.textContent = head ? head.textContent : "Story";
-            det.appendChild(sum);
-            det.appendChild(art);
-            section.appendChild(det);
-          });
-        });
-      })
-      .catch(err=>{
-        document.getElementById("news").innerHTML =
-          `<p style="color:red">Could not load the news file.<br>${err}</p>`;
+      /* wrap category blocks into <section> & convert to collapsible cards */
+      const root=document.getElementById("news");
+      let section;
+      [...root.childNodes].forEach(node=>{
+        if(node.tagName==="H2"){
+          section=document.createElement("section");
+          node.before(section);
+        }
+        section.appendChild(node);
       });
+
+      // turn each bold-headline block into <details>
+      root.querySelectorAll("section").forEach(sec=>{
+        const parts=[...sec.childNodes].filter(n=>n!==sec.querySelector("h2"));
+        let article;
+        parts.forEach(n=>{
+          if(n.querySelector&&n.querySelector("strong")){
+            article=document.createElement("details");
+            const sum=document.createElement("summary");
+            sum.textContent=n.querySelector("strong").textContent;
+            article.appendChild(sum);
+            sec.appendChild(article);
+          }
+          article?.appendChild(n);
+        });
+      });
+    })
+    .catch(e=>{
+      document.getElementById("news").innerHTML =
+        `<p style="color:#ff6b6b;font-weight:600">Could not load the news file.<br>${e}</p>`;
+    });
   </script>
 </body>
 </html>
